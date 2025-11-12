@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rent a Car</title>
+        <link rel="stylesheet" href="../css/geral.css">
+        <link rel="stylesheet" href="../css/listaEfiltros.css">
+        <link rel="stylesheet" href="../css/barra.css">
+        <link rel="stylesheet" href="../css/listar.css">
+        <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header class="bgw brdr flxcntr">
+            <h1>Rent a Car</h1>
+            <section class="bdpesquisa brdr">
+                <input type="text" placeholder="Pesquise por produtos aqui...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </section>
+
+            <section class="usuarionav">
+                <i class="fa-solid fa-heart brdr"></i>
+                <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+                <i class="fa-solid fa-user"></i><!--ao dar hover, aparece as opções "logar" ou "cadastrar". 
+                se vc ja esta logado como usuario, aparece "sair" e, sevc esta como adm, alem do sair, tb aparece "painel administrativo"-->
+                <ul class="dropdown-menu">
+                  <li><a href="#">Logar</a></li>
+                  <li><a href="#">Cadastrar</a></li>
+                  <!--se for admin-->
+                  <li><a href="#">Painel Administrativo</a></li>
+                  <!--quando logado-->
+                  <li><a href="#">Sair</a></li>
+                </ul>
+            </section>
+        </header>
+
+        <div class="flxcntr conteudo-lista">
+            <form class="bgw brdr">
+                <section>
+                    <h4>Tipo</h4>
+                    <ul>
+                        <li><input type="checkbox" id="suv"><label for="suv">SUV</label></li>
+                        <li><input type="checkbox" id="mpv"><label for="mpv">MPV</label></li>
+                        <li><input type="checkbox" id="sedan"><label for="sedan">Sedan</label></li>
+                        <li><input type="checkbox" id="coupe"><label for="coupe">Coupe</label></li>
+                        <li><input type="checkbox" id="hatch"><label for="hatch">Hatch</label></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Câmbio</h4>
+                    <ul>
+                        <li><input type="checkbox" id="manual"><label for="manual">Manual</label></li>
+                        <li><input type="checkbox" id="automatico"><label for="automatico">Automatico</label></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Capacidade</h4>
+                    <ul>
+                        <li><input type="checkbox" id="2p"><label for="2p">2 Pessoas</label></li>
+                        <li><input type="checkbox" id="4p"><label for="4p">4 Pessoas</label></li>
+                        <li><input type="checkbox" id="5p"><label for="5p">5 Pessoas</label></li>
+                        <li><input type="checkbox" id="6p"><label for="6p">6 Pessoas</label></li>
+                        <li><input type="checkbox" id="8p"><label for="8p">8 ou mais</label></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4>Preço</h4>
+                    <input type="range" min="100" max="400" step="10" value="400">
+                    <div class="valores flxcntr">
+                        <span>R$100.00</span>
+                        <span>R$400.00</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h4>Cor</h4>
+                    <div class="cores">
+                        <span style="background:#ccc;"><input type="checkbox" id="branco"></span>
+                        <span style="background:#000;"><input type="checkbox" id="preto"></span>
+                        <span style="background:#0055ff;"><input type="checkbox" id="azul"></span>
+                        <span style="background:#ff0000;"><input type="checkbox" id="vermelho"></span>
+                        <span style="background:#ffbb00;"><input type="checkbox" id="amarelo"></span>
+                    </div>
+                </section>
+
+                <button>Buscar</button>
+            </form>
+
+            <main>
+                <article class="filtros flxcntr">
+                    <section class="caixa bgw">
+                        <h4><span>◉</span> Retirada</h4>
+                        <div>
+                            <label>Localização<select>
+                                <option value="" disabled selected>Selecione sua cidade</option>
+                                <option>Rio de Janeiro</option>
+                                <option>São Paulo</option>
+                                <option>Bahia</option>
+                                <option>Rio Grande do Sul</option>
+                            </select></label>
+
+                            <label>Data<input type="date" id="data" class="data"></label>
+
+                            <label>Hora<input type="time" id="hora" class="hora"></label>
+                        </div>
+                    </section>
+
+                    <button><i class="fa-solid fa-check"></i></button>
+
+                    <section class="caixa bgw">
+                        <h4><span>◉</span> Devolução</h4>
+                        <div>
+                            <label>Localização<select>
+                                <option value="" disabled selected>Selecione sua cidade</option>
+                                <option>Rio de Janeiro</option>
+                                <option>São Paulo</option>
+                                <option>Bahia</option>
+                                <option>Rio Grande do Sul</option>
+                            </select></label>
+
+                            <label>Data<input type="date" id="data" class="data"></label>
+
+                            <label>Hora<input type="time" id="hora" class="hora"></label>
+                        </div>
+                    </section>
+                </article>
+
+                <article class="carros">
+                    <section class="carro bgw">
+                        <div class="flxcntr">
+                            <h4 class="nomeCarro">Nome</h4>
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                        <p class="tipoCarro">tipo</p>
+                        <img class="imgCarro" src="../img/image(1).png">
+                        <ul class="detalhes flxcntr">
+                            <li class="gasCarro"><i class="fa-solid fa-gas-pump"></i> gas</li>
+                            <li class="direCarro"><i class="fa-solid fa-gear"></i> tipo</li>
+                            <li class="quantCarro"><i class="fa-solid fa-user-group"></i> quant</li>
+                        </ul>
+                        <div class="preco flxcntr">
+                            <h4 class="precoCarro">R$163.00 <span>/dia</span></h4>
+                            <button>Alugue agora</button>
+                        </div>
+                    </section>
+                </article>
+            </main>
+        </div>
+    </body>
+</html>

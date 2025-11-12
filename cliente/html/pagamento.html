@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rent a Car</title>
+        <link rel="stylesheet" href="../css/geral.css">
+        <link rel="stylesheet" href="../css/listaEfiltros.css">
+        <link rel="stylesheet" href="../css/pagamento.css">
+        <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header class="bgw brdr flxcntr">
+            <h1>Rent a Car</h1>
+            <section class="bdpesquisa brdr">
+                <input type="text" placeholder="Pesquise por produtos aqui...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </section>
+
+            <section class="usuarionav">
+                <i class="fa-solid fa-heart brdr"></i>
+                <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+                <i class="fa-solid fa-user"></i><!--ao dar hover, aparece as opções "logar" ou "cadastrar". 
+                se vc ja esta logado como usuario, aparece "sair" e, sevc esta como adm, alem do sair, tb aparece "painel administrativo"-->
+                <ul class="dropdown-menu">
+                  <li><a href="#">Logar</a></li>
+                  <li><a href="#">Cadastrar</a></li>
+                  <!--se for admin-->
+                  <li><a href="#">Painel Administrativo</a></li>
+                  <!--quando logado-->
+                  <li><a href="#">Sair</a></li>
+                </ul>
+            </section>
+        </header>
+
+        <main class="flxcntr">
+            <form>
+                <section class="bgw">
+                    <h2>Informações de Cobrança</h2>
+                    <div class="flxcntr">
+                        <p>Favor, insira suas informações de cobrança</p>
+                        <p>Passo 1 de 4</p>
+                    </div>
+                    <label>Nome<input type="text" placeholder="Seu Nome"></label>
+                    <label>Endereço<input type="text" placeholder="Seu Endereço"></label>
+                    <div class="flxcntr">
+                        <label>Número de telefone<input type="text" placeholder="Número de telefone"></label>
+                        <label>CPF<input type="text" placeholder="Seu CPF"></label>
+                    </div>
+                </section>
+
+                <section class="bgw">
+                    <h2>Informações de Aluguel</h2>
+                    <div class="flxcntr">
+                        <p>Favor, insira suas informações de aluguel</p>
+                        <p>Passo 2 de 4</p>
+                    </div>
+                    <h4><span>◉</span> Retirada</h4>
+                    <div class="flxcntr">
+                        <label>Localização<select>
+                            <option value="" disabled selected>Selecione sua cidade</option>
+                            <option>Rio de Janeiro</option>
+                            <option>São Paulo</option>
+                            <option>Bahia</option>
+                            <option>Rio Grande do Sul</option>
+                        </select></label>
+
+                        <label>Data<input type="date" id="data" class="data"></label>
+
+                        <label>Hora<input type="time" id="hora" class="hora"></label>
+                    </div>
+
+                    <h4><span>◉</span> Devolução</h4>
+                    <div class="flxcntr">
+                        <label>Localização<select>
+                            <option value="" disabled selected>Selecione sua cidade</option>
+                            <option>Rio de Janeiro</option>
+                            <option>São Paulo</option>
+                            <option>Bahia</option>
+                            <option>Rio Grande do Sul</option>
+                        </select></label>
+
+                        <label>Data<input type="date" id="data" class="data"></label>
+
+                        <label>Hora<input type="time" id="hora" class="hora"></label>
+                    </div>
+                </section>
+
+                <section class="bgw">
+                    <h2>Método de Pagamento</h2>
+                    <div class="flxcntr">
+                        <p>Favor, entre com o método de pagamento</p>
+                        <p>Passo 3 de 4</p>
+                    </div>
+
+                    <section class="bgw">
+                        <h4><span>◉</span> Cartão de Crédito</h4>
+
+                        <div class="flxcntr">
+                            <label>Número do Cartão<input type="text" placeholder="Número do Cartão"></label>
+                            <label>Data de Expiração<input type="date"></label>
+                            <label>Titular do Cartão<input type="text" placeholder="Titular do Cartão"></label>
+                            <label>CVC<input type="text" placeholder="CVC"></label>
+                        </div>
+                    </section>
+                </section>
+
+                <section class="bgw">
+                    <h2>Confirmação</h2>
+                    <div class="flxcntr">
+                        <p>Estamos quase lá. Apenas alguns cliques e seu aluguel está pronto!</p>
+                        <p>Passo 4 de 4</p>
+                    </div>
+                    <input type="checkbox"> <label class="check">Concordo em receber e-mails de marketing.</label><br>
+                    <input type="checkbox"> <label class="check">Concordo com os termos e condições e políticas de privacidade.</label><br>
+        
+                    <button>Alugue Agora</button>
+                </section>
+            </form>
+
+            <aside class="bgw">
+                <h2>Resumo do Aluguel</h2>
+                <p>Os preços podem mudar dependendo da duração do aluguel e do preço do seu carro alugado.</p>
+                
+                <section class="flxcntr">
+                    <div class="bgw miniImg">
+                        <img src="../img/carros.png">
+                    </div>
+                    <h2>nomecarro</h2>
+                </section>
+
+                <section class="flxcntr">
+                    <p>Subtotal</p>
+                    <span>R$...</span>
+                </section>
+                
+                <section class="flxcntr">
+                    <p>Imposto</p>
+                    <span>R$...</span>
+                </section>
+                
+                <section class="flxcntr">
+                    <div>
+                        <h2>Preço Total do Aluguel</h2>
+                        <p>Preço total com descontos inclusos</p>
+                    </div>
+                    <h1>R$...</h1>
+                </section>
+            </aside>
+        </main>
+    </body>
+</html>

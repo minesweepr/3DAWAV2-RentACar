@@ -1,0 +1,27 @@
+aside{
+    font-size: 1.76em;
+    background: url("../img/fundo.png") no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 5rem;
+    border-radius: 0.36em;
+    margin: 0 4rem;
+}
+
+aside p{
+    margin: 1rem 0;
+    width: 75%;
+    font-size: calc(100% - 0.178em);
+}
+
+aside img{width: 110%;}
+main h3, main section>a{font-weight: 600;font-size: 1.1rem;}
+main>article{margin: 2.56rem 0;}
+
+section>a, section>a:visited, section>a:focus{Color:#3563E9;}
+
+main>button{
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.6rem 1.56rem;
+}

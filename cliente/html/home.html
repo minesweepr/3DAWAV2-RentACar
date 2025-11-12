@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rent a Car</title>
+        <link rel="stylesheet" href="../css/geral.css">
+        <link rel="stylesheet" href="../css/home.css">
+        <link rel="stylesheet" href="../css/listaEfiltros.css">
+        <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header class="bgw brdr flxcntr">
+            <h1>Rent a Car</h1>
+            <section class="bdpesquisa brdr">
+                <input type="text" placeholder="Pesquise por produtos aqui...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </section>
+
+            <section class="usuarionav">
+                <i class="fa-solid fa-heart brdr"></i>
+                <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+                <i class="fa-solid fa-user"></i><!--ao dar hover, aparece as opções "logar" ou "cadastrar". 
+                se vc ja esta logado como usuario, aparece "sair" e, sevc esta como adm, alem do sair, tb aparece "painel administrativo"-->
+                <ul class="dropdown-menu">
+                  <li><a href="#">Logar</a></li>
+                  <li><a href="#">Cadastrar</a></li>
+                  <!--se for admin-->
+                  <li><a href="#">Painel Administrativo</a></li>
+                  <!--quando logado-->
+                  <li><a href="#">Sair</a></li>
+                </ul>
+            </section>
+        </header>
+
+        <aside class="flxcntr">
+            <section>
+                <h2>Maneira fácil de alugar um carro por um preço baixo</h2>
+                <p>Fornecendo serviços de aluguel de carros baratos e instalações seguras e confortáveis.</p>
+            </section>
+            <img src="../img/carros.png">
+        </aside>
+
+        <main>
+            <article class="filtros flxcntr">
+                <section class="caixa bgw">
+                    <h4><span>◉</span> Retirada</h4>
+                    <div>
+                        <label>Localização<select>
+                            <option value="" disabled selected>Selecione sua cidade</option>
+                            <option>Rio de Janeiro</option>
+                            <option>São Paulo</option>
+                            <option>Bahia</option>
+                            <option>Rio Grande do Sul</option>
+                        </select></label>
+
+                        <label>Data<input type="date" id="data" class="data"></label>
+
+                        <label>Hora<input type="time" id="hora" class="hora"></label>
+                    </div>
+                </section>
+
+                <button><i class="fa-solid fa-check"></i></button>
+
+                <section class="caixa bgw">
+                    <h4><span>◉</span> Devolução</h4>
+                    <div>
+                        <label>Localização<select>
+                            <option value="" disabled selected>Selecione sua cidade</option>
+                            <option>Rio de Janeiro</option>
+                            <option>São Paulo</option>
+                            <option>Bahia</option>
+                            <option>Rio Grande do Sul</option>
+                        </select></label>
+
+                        <label>Data<input type="date" id="data" class="data"></label>
+
+                        <label>Hora<input type="time" id="hora" class="hora"></label>
+                    </div>
+                </section>
+            </article>
+
+            <article>
+                <section class="flxcntr">
+                    <h3>Carros Populares</h3>
+                    <a href="listar.html">Ver todos</a>
+                </section>
+
+                <article class="carros">
+                    <section class="carro bgw">
+                        <div class="flxcntr">
+                            <h4 class="nomeCarro">Nome</h4>
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+                        <p class="tipoCarro">tipo</p>
+
+                        <img class="imgCarro" src="../img/image(1).png">
+
+                        <ul class="detalhes flxcntr">
+                            <li class="gasCarro"><i class="fa-solid fa-gas-pump"></i> gas</li>
+                            <li class="direCarro"><i class="fa-solid fa-gear"></i> tipo</li>
+                            <li class="quantCarro"><i class="fa-solid fa-user-group"></i> quant</li>
+                        </ul>
+
+                        <div class="preco flxcntr">
+                            <h4 class="precoCarro">R$163.00 <span>/dia</span></h4>
+                            <button>Alugue agora</button>
+                        </div>
+                    </section>
+                </article>
+
+            </article>
+
+            <button onclick="location.href='listar.html'">Ver mais</button>
+        </main>
+    </body>
+</html>

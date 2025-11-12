@@ -1,0 +1,57 @@
+main{align-items: flex-start!important;}
+form{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+form>section{padding: 1.5rem 2rem;}
+h4>span{color: #3563E9;}
+form>section h2{font-size: 1.2rem;}
+form>section h2, form>section h4, 
+form>section p, form>section input, 
+form>section select, form>section button,
+aside section{margin: 0.5rem 0;}
+.flxcntr{gap: 1rem;}
+form>section p{font-size: 0.9rem;}
+
+label:not(.check){
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    gap: 4px;
+    width: 100%;
+}
+.check{flex-direction: row;}
+
+form>section input, form>section select{
+    border: 1px solid #dae1e7;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 0.9rem;
+    background-color: white;
+    cursor: pointer;
+}
+/*barra*/
+aside>section:first-of-type{justify-content: flex-start;}
+.miniImg{
+    background-image: url(../img/bg.png);
+    width: 100px;
+    height: 100px;
+    align-content: center;
+    padding: 0.5em;
+}
+aside img{width: 100%;}
+
+aside{
+    flex: 1;
+    position: sticky;
+    top: 1.5rem;
+    padding: 1.5rem;
+    height: fit-content;
+}
+
+aside h2{
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}

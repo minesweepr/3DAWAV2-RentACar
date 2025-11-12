@@ -1,0 +1,39 @@
+.filtros button{margin: 1rem;}
+.filtros{padding:0; gap: 0;}
+.caixa input, .caixa select{text-align: center;}
+
+.caixa>div{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.desc{
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.descCarro{
+    background-image: url(../img/bg.png);
+    height: 350px;
+    width: 450px;
+    border-radius: 0.36em;
+}
+
+.categSobre{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.categSobre>.flxcntr:not(odd){margin: 5px 15px 0 0;}
+.categSobre>.flxcntr>p:first-child{color:#90A3BF;}
+.descSobre{padding: 2rem;}
+.compraCarro{margin-top: 1.78em;}
+.txtSobreCarro{
+    padding: 0.55em;
+    height:150px;
+    width: 360px;
+    overflow-y: scroll;
+}

@@ -1,0 +1,43 @@
+:root{
+    --accent: #3563E9;
+    --secondary: #90A3BF;
+}
+
+.carros{grid-template-columns: repeat(3, 1fr);} 
+.container{justify-content: flex-start;}
+
+.conteudo-lista{
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 0 4rem;
+}
+
+.conteudo-lista>form{
+    position: sticky;
+    padding: 1.5rem;
+    top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+form>section h4{color: var(--secondary);}
+form>section label, .valores>span{color: #596780;}
+input[type="checkbox"]{margin-top: 0.76em;}
+.valores>span{font-size: small;}
+.cores>span, .cores input{cursor: pointer;}
+
+.cores{
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.cores>span{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+}
