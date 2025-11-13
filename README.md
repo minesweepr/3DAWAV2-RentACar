@@ -4,11 +4,12 @@
 - **Email:** adm@adm  
 - **Senha:** 4DM  
 
-## Templates
-### Usuário existente
+## Usuário existente
 
 - **Email**: teste@gmail.com
 - **Senha**: teste
+
+## Templates
 
 ### Novo usuário
 
@@ -27,7 +28,7 @@
 - **Ano**: 202
 - **Cor**: Branco
 - **Tanque**: 45
-- **Cambio**: Automático
+- **Câmbio**: Automático
 - **Capacidade**: 5
-- **Descricao**: O Volkswagen Polo é um hatchback moderno, que combina elegância e praticidade. Seu design é harmonioso e equilibrado, com linhas fluidas e uma postura compacta, transmitindo sofisticação sem perder a agilidade urbana.
+- **Descrição**: O Volkswagen Polo é um hatchback moderno, que combina elegância e praticidade. Seu design é harmonioso e equilibrado, com linhas fluidas e uma postura compacta, transmitindo sofisticação sem perder a agilidade urbana.
 - **Imagem**: https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/VolkswagenPolo.png
