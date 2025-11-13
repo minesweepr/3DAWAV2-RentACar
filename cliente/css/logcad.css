@@ -1,0 +1,33 @@
+h1{
+    text-align: center;
+}
+
+form{
+    width: fit-content;
+    margin: auto;
+    padding: 2.5em;
+    align-items: center;
+}
+
+button{
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+input{
+    border: 1px solid #dae1e7;
+    margin-bottom: 1em;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 0.9rem;
+    background-color: white;
+    cursor: pointer;
+}
+
+fieldset{
+    border: 1px solid #c7d2dc;
+    border-radius: 6px;
+    padding: 1em;
+    width: 100%;
+}

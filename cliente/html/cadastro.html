@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rent a Car</title>
+        <link rel="stylesheet" href="../css/geral.css">
+        <link rel="stylesheet" href="../css/pagamento.css">
+        <link rel="stylesheet" href="../css/logcad.css">
+    </head>
+    <body>
+        <header class="bgw brdr flxcntr">
+          <h1>Rent a Car</h1>
+        </header>
+
+        <main>
+            <form class="bgw" id="formCadastro">
+                <fieldset>
+                    <legend>Dados Gerais</legend>
+                    <label>Nome<input type="text" name="nome" required></label>
+                    <label>Email<input type="email" name="email" required></label>
+                    <label>Senha<input type="password" name="senha" required></label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Dados Pessoais</legend>
+                    <div class="flxcntr">
+                        <label>CPF<input type="text" name="cpf" required></label>
+                        <label>Telefone<input type="tel" name="telefone" required></label>
+                    </div>
+                    <label>Endereço<input type="text" name="endereco" required></label>
+                </fieldset>
+
+                <div id="mensagem" class="alert" style="display:none;"></div>
+
+                <button type="submit">Cadastrar</button>
+
+                <a href="login.html">Já tem uma conta? Entre.</a>
+            </form>
+      </main>
+
+      <script>
+        document.getElementById("formCadastro").addEventListener("submit", function(e){
+            e.preventDefault();
+            const form=e.target;
+            const nome=form.nome.value;
+            const email=form.email.value;
+            const senha=form.senha.value;
+            const cpf=form.cpf.value;
+            const telefone=form.telefone.value;
+            const endereco=form.endereco.value;
+          
+            const msg=document.getElementById("mensagem");
+            msg.style.display="block";
+            msg.className="alert";
+            let xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange=function(){
+                if(this.readyState===4){
+                    if(this.status===200){
+                        try{
+                            const dados=JSON.parse(this.responseText);
+                          
+                            if(dados.sucesso){
+                                msg.className="alert success";
+                                msg.innerHTML=dados.mensagem;
+                                setTimeout(()=>window.location.href="login.html", 1000);
+                            }else{
+                                msg.className="alert error";
+                                msg.innerHTML=dados.mensagem;
+                            }
+                        }catch (erro){
+                            msg.className="alert error";
+                            msg.innerHTML="Erro ao processar resposta do servidor.";
+                        }
+                    }else{
+                        msg.className="alert error";
+                        msg.innerHTML="Erro na conexão com o servidor (" + this.status + ").";
+                    }
+                }
+            };
+            xmlhttp.open("POST", "../php/cadastro.php", true);
+            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xmlhttp.send("nome=" + encodeURIComponent(nome) + "&email=" + encodeURIComponent(email) +
+                "&senha=" + encodeURIComponent(senha) + "&cpf=" + encodeURIComponent(cpf) +
+                "&telefone=" + encodeURIComponent(telefone) + "&endereco=" + encodeURIComponent(endereco)
+            );
+        });
+      </script>
+    </body>
+</html>

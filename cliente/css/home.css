@@ -14,9 +14,9 @@ aside p{
     font-size: calc(100% - 0.178em);
 }
 
-aside img{width: 110%;}
+aside img{width: 48vw;}
 main h3, main section>a{font-weight: 600;font-size: 1.1rem;}
-main>article{margin: 2.56rem 0;}
+main>article, main>form{margin: 2.56rem 0;}
 
 section>a, section>a:visited, section>a:focus{Color:#3563E9;}
 

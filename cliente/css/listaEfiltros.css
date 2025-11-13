@@ -50,8 +50,8 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
-.carro{padding: 1.3rem 2rem;margin-bottom: 1.8rem;}
-.carro:not(:nth-child(4n)){margin-right: 1.8rem;}
+.carro{padding: 1.3rem 2rem;margin: 0 0.9rem 1.8rem;}
+
 
 .detalhes{
     list-style: none;
@@ -68,3 +68,4 @@
 
 .detalhes i, .detalhes, .tipoCarro, h4>span{color: var(--secondary);}
 h4>span, .tipoCarro{font-weight: 500;}
+.carro>h4:first-of-type{cursor: pointer;}

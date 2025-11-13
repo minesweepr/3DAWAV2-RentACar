@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rent a Car</title>
+        <link rel="stylesheet" href="../css/geral.css">
+        <link rel="stylesheet" href="../css/pagamento.css">
+        <link rel="stylesheet" href="../css/logcad.css">
+        <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header class="bgw brdr flxcntr">
+            <h1>Rent a Car</h1>
+        </header>
+
+        <main>
+            <form class="bgw" id="formLogin">
+              <h1>Login</h1>
+              <label for="email">Email<input type="email" name="email" id="email" placeholder="Email" required></label>
+              <label for="senha">Senha<input type="password" name="senha" id="senha" placeholder="Senha" required></label>
+            
+              <div id="mensagem" class="alert" style="display:none;"></div>
+            
+              <button type="submit">Logar</button>
+              <a href="cadastro.html">Não tem uma conta? Cadastre-se.</a>
+            </form>
+        </main>
+        <script>
+          document.getElementById("formLogin").addEventListener("submit", function(e){
+            e.preventDefault();
+            let email=document.getElementById("email").value;
+            let senha=document.getElementById("senha").value;
+            let msg=document.getElementById("mensagem");
+            msg.style.display="block";
+            msg.className="alert";
+          
+            let xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange=function(){
+              if(this.readyState===4) {
+                if(this.status===200){
+                  try{
+                    let dados=JSON.parse(this.responseText);
+                    if(dados.sucesso){
+                      msg.className="alert successo";
+                      msg.innerHTML=dados.mensagem;
+                      setTimeout(()=>{
+                        window.location.href=dados.redirect||"home.html";
+                      }, 1000);
+                    }else{
+                      msg.className="alert error";
+                      msg.innerHTML=dados.mensagem;
+                    }
+                  }catch (erro){
+                    msg.className="alert error";
+                    msg.innerHTML="erro ao processar resposta do servidor.";
+                  }
+                }else{
+                  msg.className="alert error";
+                  msg.innerHTML="erro na conexão com o servidor (" + this.status + ").";
+                }
+              }
+            };
+          
+            xmlhttp.open("POST", "../php/login.php", true);
+            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xmlhttp.send("email=" + encodeURIComponent(email) + "&senha=" + encodeURIComponent(senha));
+          });
+        </script>
+
+    </body>
+</html>

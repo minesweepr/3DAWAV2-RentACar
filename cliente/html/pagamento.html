@@ -8,28 +8,20 @@
         <link rel="stylesheet" href="../css/listaEfiltros.css">
         <link rel="stylesheet" href="../css/pagamento.css">
         <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+        <script defer src="../js/pesquisa.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header class="bgw brdr flxcntr">
             <h1>Rent a Car</h1>
             <section class="bdpesquisa brdr">
-                <input type="text" placeholder="Pesquise por produtos aqui...">
+                <input type="text" id="pesquisa" placeholder="Pesquise por produtos aqui...">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </section>
 
             <section class="usuarionav">
-                <i class="fa-solid fa-heart brdr"></i>
+                <a href="../php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
                 <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
-                <i class="fa-solid fa-user"></i><!--ao dar hover, aparece as opções "logar" ou "cadastrar". 
-                se vc ja esta logado como usuario, aparece "sair" e, sevc esta como adm, alem do sair, tb aparece "painel administrativo"-->
-                <ul class="dropdown-menu">
-                  <li><a href="#">Logar</a></li>
-                  <li><a href="#">Cadastrar</a></li>
-                  <!--se for admin-->
-                  <li><a href="#">Painel Administrativo</a></li>
-                  <!--quando logado-->
-                  <li><a href="#">Sair</a></li>
-                </ul>
+                <i class="fa-solid fa-user"></i>
             </section>
         </header>
 
@@ -65,9 +57,9 @@
                             <option>Rio Grande do Sul</option>
                         </select></label>
 
-                        <label>Data<input type="date" id="data" class="data"></label>
+                        <label>Data<input type="date" id="data" class="data" required></label>
 
-                        <label>Hora<input type="time" id="hora" class="hora"></label>
+                        <label>Hora<input type="time" id="hora" class="hora" required></label>
                     </div>
 
                     <h4><span>◉</span> Devolução</h4>
@@ -80,9 +72,9 @@
                             <option>Rio Grande do Sul</option>
                         </select></label>
 
-                        <label>Data<input type="date" id="data" class="data"></label>
+                        <label>Data<input type="date" id="data" class="data" required></label>
 
-                        <label>Hora<input type="time" id="hora" class="hora"></label>
+                        <label>Hora<input type="time" id="hora" class="hora" required></label>
                     </div>
                 </section>
 
@@ -97,10 +89,10 @@
                         <h4><span>◉</span> Cartão de Crédito</h4>
 
                         <div class="flxcntr">
-                            <label>Número do Cartão<input type="text" placeholder="Número do Cartão"></label>
-                            <label>Data de Expiração<input type="date"></label>
-                            <label>Titular do Cartão<input type="text" placeholder="Titular do Cartão"></label>
-                            <label>CVC<input type="text" placeholder="CVC"></label>
+                            <label>Número do Cartão<input type="text" placeholder="Número do Cartão" required></label>
+                            <label>Data de Expiração<input type="date" required></label>
+                            <label>Titular do Cartão<input type="text" placeholder="Titular do Cartão" required></label>
+                            <label>CVC<input type="text" placeholder="CVC" required></label>
                         </div>
                     </section>
                 </section>
@@ -112,7 +104,7 @@
                         <p>Passo 4 de 4</p>
                     </div>
                     <input type="checkbox"> <label class="check">Concordo em receber e-mails de marketing.</label><br>
-                    <input type="checkbox"> <label class="check">Concordo com os termos e condições e políticas de privacidade.</label><br>
+                    <input type="checkbox"> <label class="check" required>Concordo com os termos e condições e políticas de privacidade.</label><br>
         
                     <button>Alugue Agora</button>
                 </section>
@@ -124,19 +116,19 @@
                 
                 <section class="flxcntr">
                     <div class="bgw miniImg">
-                        <img src="../img/carros.png">
+                        <img src="">
                     </div>
                     <h2>nomecarro</h2>
                 </section>
 
                 <section class="flxcntr">
-                    <p>Subtotal</p>
-                    <span>R$...</span>
+                    <p>Diária</p>
+                    <span id="diaria">$</span>
                 </section>
                 
                 <section class="flxcntr">
-                    <p>Imposto</p>
-                    <span>R$...</span>
+                    <p>Dia(s)</p>
+                    <span id="dias">1</span>
                 </section>
                 
                 <section class="flxcntr">
@@ -144,9 +136,106 @@
                         <h2>Preço Total do Aluguel</h2>
                         <p>Preço total com descontos inclusos</p>
                     </div>
-                    <h1>R$...</h1>
+                    <h1 id="total">R$...</h1>
                 </section>
             </aside>
         </main>
+        <script>
+        //informacoes gerais sobre a compra
+        function carregarResumo(){
+            const id=new URLSearchParams(window.location.search).get("id");
+            if(!id) return;
+        
+            const xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange=function(){
+                if(this.readyState===4){
+                    if(this.status===200){
+                        try{
+                            const data = JSON.parse(this.responseText);
+                            if(data.erro){
+                                alert(data.erro);
+                                return;
+                            }
+                            const{usuario, carro}=data;
+                            document.querySelector('input[placeholder="Seu Nome"]').value=usuario.nome;
+                            document.querySelector('input[placeholder="Seu Endereço"]').value=usuario.endereco;
+                            document.querySelector('input[placeholder="Número de telefone"]').value=usuario.telefone;
+                            document.querySelector('input[placeholder="Seu CPF"]').value=usuario.cpf;
+
+                            document.querySelector(".miniImg img").src=carro.imagem;
+                            document.querySelector("aside .miniImg + h2").textContent=carro.modelo;
+                            document.getElementById("diaria").textContent=`R$${carro.preco}`;
+
+                            //só pra calculadora de preço funcionar direitinho, fiz com q a data ja tivesse pronta
+                            const hoje=new Date();
+                            const amanha=new Date(hoje);
+                            amanha.setDate(hoje.getDate()+1);
+                        
+                            const dataInputs=document.querySelectorAll('input[type="date"]');
+                            dataInputs[0].value=hoje.toISOString().split("T")[0];
+                            dataInputs[1].value=amanha.toISOString().split("T")[0];
+                        
+                            document.getElementById("total").dataset.preco = carro.preco;
+                            calcularTotal();
+                        } catch(e){
+                            console.error(e);
+                        }
+                    } else alert("Erro ao carregar resumo do carro.");
+                }
+            };
+            xmlhttp.open("GET", `../php/pagamento.php?id=${id}`, true);
+            xmlhttp.send();
+        }
+
+        function calcularTotal(){
+            const preco=parseFloat(document.getElementById("total").dataset.preco);
+            const dataInicio=new Date(document.querySelectorAll('input[type="date"]')[0].value);
+            const dataFim=new Date(document.querySelectorAll('input[type="date"]')[1].value);
+            
+            const dias=Math.max(1, Math.round((dataFim-dataInicio)/(1000*60*60*24)));
+            document.getElementById("dias").textContent=dias;
+            const total=preco*dias;
+            document.getElementById("total").textContent=`R$${total.toFixed(2)}`;
+            }
+            document.querySelectorAll('input[type="date"]').forEach(input=>{
+                input.addEventListener('change', calcularTotal);
+        });
+
+        //fim da compra
+        document.querySelector("button").addEventListener("click", function(e){
+            e.preventDefault();
+            const id=new URLSearchParams(window.location.search).get("id");
+            const data_inicio=document.querySelectorAll('input[type="date"]')[0].value;
+            const data_fim=document.querySelectorAll('input[type="date"]')[1].value;
+            const lugar=document.querySelectorAll("select")[0].value;
+            const valor_pago=parseFloat(document.getElementById("total").textContent.replace("R$", "").trim());
+        
+            const formData=new FormData();
+            formData.append("id_carro", id);
+            formData.append("data_inicio", data_inicio);
+            formData.append("data_fim", data_fim);
+            formData.append("lugar", lugar);
+            formData.append("valor_pago", valor_pago);
+        
+            const xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange=function(){
+                if(this.readyState===4){
+                    if(this.status===200){
+                        try{
+                            const result = JSON.parse(this.responseText);
+                            alert(result.mensagem);
+                            if(result.sucesso) window.location.href = "home.html";
+                        }catch(e){
+                            console.error(e);
+                            alert("Erro ao processar resposta do servidor.");
+                        }
+                    }else alert("Erro ao enviar dados do aluguel. Código: " + this.status);
+                }
+            };
+            xmlhttp.open("POST", "../php/aluguel.php", true);
+            xmlhttp.send(formData);
+        });
+        carregarResumo();
+        </script>
     </body>
 </html>

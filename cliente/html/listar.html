@@ -9,88 +9,80 @@
         <link rel="stylesheet" href="../css/barra.css">
         <link rel="stylesheet" href="../css/listar.css">
         <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+        <script defer src="../js/carregarCarros.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header class="bgw brdr flxcntr">
             <h1>Rent a Car</h1>
             <section class="bdpesquisa brdr">
-                <input type="text" placeholder="Pesquise por produtos aqui...">
+                <input type="text" id="pesquisa" placeholder="Pesquise por produtos aqui...">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </section>
 
             <section class="usuarionav">
-                <i class="fa-solid fa-heart brdr"></i>
+                <a href="../php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
                 <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
-                <i class="fa-solid fa-user"></i><!--ao dar hover, aparece as opções "logar" ou "cadastrar". 
-                se vc ja esta logado como usuario, aparece "sair" e, sevc esta como adm, alem do sair, tb aparece "painel administrativo"-->
-                <ul class="dropdown-menu">
-                  <li><a href="#">Logar</a></li>
-                  <li><a href="#">Cadastrar</a></li>
-                  <!--se for admin-->
-                  <li><a href="#">Painel Administrativo</a></li>
-                  <!--quando logado-->
-                  <li><a href="#">Sair</a></li>
-                </ul>
+                <i class="fa-solid fa-user"></i>
             </section>
         </header>
 
         <div class="flxcntr conteudo-lista">
-            <form class="bgw brdr">
+            <form class="bgw brdr" id="formFiltros">
                 <section>
                     <h4>Tipo</h4>
                     <ul>
-                        <li><input type="checkbox" id="suv"><label for="suv">SUV</label></li>
-                        <li><input type="checkbox" id="mpv"><label for="mpv">MPV</label></li>
-                        <li><input type="checkbox" id="sedan"><label for="sedan">Sedan</label></li>
-                        <li><input type="checkbox" id="coupe"><label for="coupe">Coupe</label></li>
-                        <li><input type="checkbox" id="hatch"><label for="hatch">Hatch</label></li>
+                        <li><input type="checkbox" name="tipo" value="SUV"><label>SUV</label></li>
+                        <li><input type="checkbox" name="tipo" value="MPV"><label>MPV</label></li>
+                        <li><input type="checkbox" name="tipo" value="Sedan"><label>Sedan</label></li>
+                        <li><input type="checkbox" name="tipo" value="Coupe"><label>Coupe</label></li>
+                        <li><input type="checkbox" name="tipo" value="Hatch"><label>Hatch</label></li>
                     </ul>
                 </section>
 
                 <section>
                     <h4>Câmbio</h4>
                     <ul>
-                        <li><input type="checkbox" id="manual"><label for="manual">Manual</label></li>
-                        <li><input type="checkbox" id="automatico"><label for="automatico">Automatico</label></li>
+                        <li><input type="checkbox" name="cambio" value="Manual"><label>Manual</label></li>
+                        <li><input type="checkbox" name="cambio" value="Automático"><label>Automatico</label></li>
                     </ul>
                 </section>
 
                 <section>
                     <h4>Capacidade</h4>
                     <ul>
-                        <li><input type="checkbox" id="2p"><label for="2p">2 Pessoas</label></li>
-                        <li><input type="checkbox" id="4p"><label for="4p">4 Pessoas</label></li>
-                        <li><input type="checkbox" id="5p"><label for="5p">5 Pessoas</label></li>
-                        <li><input type="checkbox" id="6p"><label for="6p">6 Pessoas</label></li>
-                        <li><input type="checkbox" id="8p"><label for="8p">8 ou mais</label></li>
+                        <li><input type="checkbox" name="capacidade" value="2"><label>2</label></li>
+                        <li><input type="checkbox" name="capacidade" value="4"><label>4</label></li>
+                        <li><input type="checkbox" name="capacidade" value="5"><label>5</label></li>
+                        <li><input type="checkbox" name="capacidade" value="6"><label>6</label></li>
+                        <li><input type="checkbox" name="capacidade" value="8"><label>8+</label></li>
                     </ul>
                 </section>
 
                 <section>
                     <h4>Preço</h4>
-                    <input type="range" min="100" max="400" step="10" value="400">
+                    <input type="range" id="precoRange" min="100" max="400" step="50" value="400">
                     <div class="valores flxcntr">
                         <span>R$100.00</span>
-                        <span>R$400.00</span>
+                        <span id="precoMax">R$400.00</span>
                     </div>
                 </section>
 
                 <section>
                     <h4>Cor</h4>
                     <div class="cores">
-                        <span style="background:#ccc;"><input type="checkbox" id="branco"></span>
-                        <span style="background:#000;"><input type="checkbox" id="preto"></span>
-                        <span style="background:#0055ff;"><input type="checkbox" id="azul"></span>
-                        <span style="background:#ff0000;"><input type="checkbox" id="vermelho"></span>
-                        <span style="background:#ffbb00;"><input type="checkbox" id="amarelo"></span>
+                        <span style="background:#eaeaea;"><input type="checkbox" name="cor" value="Branco"></span>
+                        <span style="background:#898989;"><input type="checkbox" name="cor" value="Cinza"></span>
+                        <span style="background:#000;"><input type="checkbox" name="cor" value="Preto"></span>
+                        <span style="background:#0055ff;"><input type="checkbox" name="cor" value="Azul"></span>
+                        <span style="background:#ff0000;"><input type="checkbox" name="cor" value="Vermelho"></span>
                     </div>
                 </section>
 
-                <button>Buscar</button>
+                <button type="button" id="btnFiltrar">Buscar</button>
             </form>
 
             <main>
-                <article class="filtros flxcntr">
+                <form class="filtros flxcntr">
                     <section class="caixa bgw">
                         <h4><span>◉</span> Retirada</h4>
                         <div>
@@ -126,28 +118,106 @@
                             <label>Hora<input type="time" id="hora" class="hora"></label>
                         </div>
                     </section>
-                </article>
+                </form>
 
-                <article class="carros">
-                    <section class="carro bgw">
-                        <div class="flxcntr">
-                            <h4 class="nomeCarro">Nome</h4>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-                        <p class="tipoCarro">tipo</p>
-                        <img class="imgCarro" src="../img/image(1).png">
-                        <ul class="detalhes flxcntr">
-                            <li class="gasCarro"><i class="fa-solid fa-gas-pump"></i> gas</li>
-                            <li class="direCarro"><i class="fa-solid fa-gear"></i> tipo</li>
-                            <li class="quantCarro"><i class="fa-solid fa-user-group"></i> quant</li>
-                        </ul>
-                        <div class="preco flxcntr">
-                            <h4 class="precoCarro">R$163.00 <span>/dia</span></h4>
-                            <button>Alugue agora</button>
-                        </div>
-                    </section>
+                <article class="carros" id="listaCarros">
+                    <p>Carregando carros...</p>
                 </article>
             </main>
         </div>
+
+        <script>
+            let todosOsCarros=[];
+
+            function carregarCarros(){
+                const container=document.getElementById("listaCarros");
+            
+                let xmlhttp=new XMLHttpRequest();
+                xmlhttp.onreadystatechange=function() {
+                    if(this.readyState===4){
+                        if(this.status===200){
+                            try{
+                                const carros=JSON.parse(this.responseText);
+                                todosOsCarros=carros;
+                                renderizarCarros(carros);
+                            }catch (e){
+                                container.innerHTML="<p>Erro ao processar dados dos carros.</p>";
+                                console.error(e);
+                            }
+                        }else container.innerHTML="<p>Erro ao carregar carros. Código: " + this.status + "</p>";
+                    }
+                };
+                xmlhttp.open("GET", "../php/listar_carros.php", true);
+                xmlhttp.send();
+            }
+
+            function renderizarCarros(carros){
+                const container=document.getElementById("listaCarros");
+                container.innerHTML="";
+                if(!carros.length){
+                    container.innerHTML="<p>Nenhum carro encontrado.</p>";
+                    return;
+                }
+            
+                carros.forEach(carro => {
+                    const section = document.createElement("section");
+                    section.className="carro bgw";
+                    section.innerHTML=`
+                        <h4 onclick="location.href='listarUm.html?id=${carro.id_carro}'">${carro.modelo}</h4>
+                        <p>${carro.tipo}</p>
+                        <img src="${carro.imagem}">
+                        <ul class="detalhes flxcntr">
+                          <li><i class="fa-solid fa-gas-pump"></i> ${carro.cor}</li>
+                          <li><i class="fa-solid fa-gear"></i> ${carro.cambio}</li>
+                          <li><i class="fa-solid fa-user-group"></i> ${carro.capacidade}</li>
+                        </ul>
+                        <div class="preco flxcntr">
+                          <h4>R$${carro.preco} <span>/dia</span></h4>
+                          <button onclick="location.href='pagamento.html?id=${carro.id_carro}'">Alugue agora</button>
+                        </div>
+                    `;
+                    container.appendChild(section);
+                });
+            }
+
+            function aplicarFiltros(){
+                const precoMax=parseInt(document.getElementById("precoRange").value);
+                document.getElementById("precoMax").textContent=`R$${precoMax}`;
+            
+                const tipos=[...document.querySelectorAll("input[name='tipo']:checked")].map(el => el.value);
+                const cambios=[...document.querySelectorAll("input[name='cambio']:checked")].map(el => el.value);
+                const capacidades=[...document.querySelectorAll("input[name='capacidade']:checked")].map(el => el.value);
+                const cores=[...document.querySelectorAll("input[name='cor']:checked")].map(el => el.value);
+                const pesquisa=document.getElementById("pesquisa").value.toLowerCase();
+            
+                const filtrados=todosOsCarros.filter(carro =>{
+                    const condPreco=(carro.preco || 0) <= precoMax;
+                    const condTipo=tipos.length ? tipos.includes(carro.tipo):true;
+                    const condCambio=cambios.length ? cambios.includes(carro.cambio):true;
+                    const condCapacidade=capacidades.length ? capacidades.includes(String(carro.capacidade)):true;
+                    const condCor=cores.length ? cores.includes(carro.cor):true;
+                    const condPesquisa=carro.modelo.toLowerCase().includes(pesquisa);
+                    return condPreco && condTipo && condCambio && condCapacidade && condCor && condPesquisa;
+                });
+                renderizarCarros(filtrados);
+            }
+            document.getElementById("btnFiltrar").addEventListener("click", aplicarFiltros);
+            document.getElementById("precoRange").addEventListener("input", aplicarFiltros);
+            document.getElementById("pesquisa").addEventListener("input", aplicarFiltros);
+            carregarCarros();
+
+            //fiz isso aq pra pegar a informação de pesquisa das outras paginas
+            window.onload=function(){
+                const params=new URLSearchParams(window.location.search);
+                const termo=params.get("pesquisa");
+                const input=document.getElementById("pesquisa");
+                if(termo) input.value=decodeURIComponent(termo);
+
+                setTimeout(()=>{
+                    if(typeof aplicarFiltros==="function") aplicarFiltros();
+                }, 100);
+            };
+        </script>
+
     </body>
 </html>

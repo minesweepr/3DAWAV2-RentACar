@@ -8,28 +8,20 @@
         <link rel="stylesheet" href="../css/home.css">
         <link rel="stylesheet" href="../css/listaEfiltros.css">
         <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+        <script defer src="../js/pesquisa.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header class="bgw brdr flxcntr">
             <h1>Rent a Car</h1>
             <section class="bdpesquisa brdr">
-                <input type="text" placeholder="Pesquise por produtos aqui...">
+                <input type="text" id="pesquisa" placeholder="Pesquise por produtos aqui...">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </section>
 
             <section class="usuarionav">
-                <i class="fa-solid fa-heart brdr"></i>
+                <a href="../php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
                 <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
-                <i class="fa-solid fa-user"></i><!--ao dar hover, aparece as opções "logar" ou "cadastrar". 
-                se vc ja esta logado como usuario, aparece "sair" e, sevc esta como adm, alem do sair, tb aparece "painel administrativo"-->
-                <ul class="dropdown-menu">
-                  <li><a href="#">Logar</a></li>
-                  <li><a href="#">Cadastrar</a></li>
-                  <!--se for admin-->
-                  <li><a href="#">Painel Administrativo</a></li>
-                  <!--quando logado-->
-                  <li><a href="#">Sair</a></li>
-                </ul>
+                <i class="fa-solid fa-user"></i>
             </section>
         </header>
 
@@ -42,7 +34,7 @@
         </aside>
 
         <main>
-            <article class="filtros flxcntr">
+            <form class="filtros flxcntr" action="listar.html" method="get">
                 <section class="caixa bgw">
                     <h4><span>◉</span> Retirada</h4>
                     <div>
@@ -60,7 +52,7 @@
                     </div>
                 </section>
 
-                <button><i class="fa-solid fa-check"></i></button>
+                <button type="submit"><i class="fa-solid fa-check"></i></button>
 
                 <section class="caixa bgw">
                     <h4><span>◉</span> Devolução</h4>
@@ -78,7 +70,7 @@
                         <label>Hora<input type="time" id="hora" class="hora"></label>
                     </div>
                 </section>
-            </article>
+            </form>
 
             <article>
                 <section class="flxcntr">
@@ -86,32 +78,60 @@
                     <a href="listar.html">Ver todos</a>
                 </section>
 
-                <article class="carros">
-                    <section class="carro bgw">
-                        <div class="flxcntr">
-                            <h4 class="nomeCarro">Nome</h4>
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-                        <p class="tipoCarro">tipo</p>
-
-                        <img class="imgCarro" src="../img/image(1).png">
-
-                        <ul class="detalhes flxcntr">
-                            <li class="gasCarro"><i class="fa-solid fa-gas-pump"></i> gas</li>
-                            <li class="direCarro"><i class="fa-solid fa-gear"></i> tipo</li>
-                            <li class="quantCarro"><i class="fa-solid fa-user-group"></i> quant</li>
-                        </ul>
-
-                        <div class="preco flxcntr">
-                            <h4 class="precoCarro">R$163.00 <span>/dia</span></h4>
-                            <button>Alugue agora</button>
-                        </div>
-                    </section>
+                <article class="carros" id="listaCarros">
+                    <p>Carregando carros...</p>
                 </article>
 
             </article>
 
             <button onclick="location.href='listar.html'">Ver mais</button>
         </main>
+        <script>
+            function carregarCarros(){
+            const container=document.getElementById("listaCarros");
+            let xmlhttp=new XMLHttpRequest();
+            xmlhttp.onreadystatechange=function() {
+                if(this.readyState===4){
+                    if(this.status===200){
+                        try{
+                            const carros=JSON.parse(this.responseText);
+                            container.innerHTML="";
+                        
+                            if(!carros.length){
+                                container.innerHTML="<p>Não há carros cadastrados.</p>";
+                                return;
+                            }
+                            carros.slice(0, 8).forEach(carro => {
+                                const section=document.createElement("section");
+                                section.className="carro bgw";
+                                section.innerHTML=`
+                                    <h4 onclick="location.href='listarUm.html?id=${carro.id_carro}'">${carro.modelo}</h4>
+                                    <p>${carro.tipo}</p>
+                                    <img src="${carro.imagem}">
+                                    <ul class="detalhes flxcntr">
+                                      <li><i class="fa-solid fa-gas-pump"></i> ${carro.cor}</li>
+                                      <li><i class="fa-solid fa-gear"></i> ${carro.cambio}</li>
+                                      <li><i class="fa-solid fa-user-group"></i> ${carro.capacidade}</li>
+                                    </ul>
+                                    <div class="preco flxcntr">
+                                      <h4>R$${carro.preco} <span>/dia</span></h4>
+                                      <button onclick="location.href='pagamento.html?id=${carro.id_carro}'">Alugue agora</button>
+                                    </div>
+                                `;
+                                container.appendChild(section);
+                            });
+                        
+                        }catch (erro){
+                            container.innerHTML = "<p>Erro ao processar os dados.</p>";
+                            console.error(erro);
+                        }
+                    } else container.innerHTML = "<p>Erro ao carregar carros. Código: " + this.status + "</p>";
+                }
+            };
+            xmlhttp.open("GET", "../php/listar_carros.php", true);
+            xmlhttp.send();
+        }
+        carregarCarros();
+        </script>
     </body>
 </html>
