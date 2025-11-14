@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>admin Rent a Car</title>
+  <link rel="stylesheet" href="../css/geral.css">
+  <link rel="stylesheet" href="../css/form.css">
+  <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+</head>
+<body>
+   <header class="bgw brdr flxbtw">
+      <h1>Rent a Car</h1>
+
+      <section class="usuarionav">
+          <a href="../../cliente/php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
+          <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+          <i class="fa-solid fa-user"></i>
+      </section>
+
+    <button class="menu-btn" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+  </header>
+
+  <article class="container">
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i></i> Dashboard</a></li>
+        <li><a href="./reservas.html"><i class="fa-solid fa-calendar-days"></i> Reservas</a></li>
+        <li><a href="./carros.html"><i class="fa-solid fa-right-from-bracket"></i></i> Carros</a></li>
+        <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      </ul>
+    </nav>
+
+    <section class="conteudo">
+
+      <section class="sub-header">
+        <h1>Editar </h1>
+      </section>
+
+      <main class="flxcntr">
+      
+        <div class="carro-img"><img src="" alt=""></div>
+        <form class="bgw">
+          <section class="flxcntr">
+            <div>
+              <label>Modelo<input id="modelo" type="text"></label>
+              <label>Imagem<input id="imagem" type="text"></label>
+              <label>Tipo<input id="tipo" type="text"></label>
+              <label>Câmbio
+                <select id="cambio">
+                  <option value="Manual">Manual</option>
+                  <option value="Automático">Automático</option>
+                  <option value="CVT">CVT</option>
+                </select>
+              </label>
+              <label>Preço (R$)<input id="preco" type="number" step="0.01"></label>
+            </div>
+
+            <div>
+              <label>Cor<input id="cor" type="text"></label>
+              <label>Placa<input id="placa" type="text"></label>
+              <label>Capacidade<input id="capacidade" type="number" min="1"></label>
+              <label>Tanque<input id="tanque" type="number" min="0"></label>
+              <label>Ano<input id="ano" type="number" min="1800" max="2099"></label>
+            </div>
+          </section>
+
+          <label>Descrição<textarea id="descricao" rows="4"></textarea></label>
+
+          <div class="flxbtw">
+            <button type="button" class="salvar" onclick="alterarCarro()">Salvar</button>
+            <button type="button" class="excluir" onclick="excluirCarro()">Excluir</button>
+          </div>
+        </form>
+    </main>
+    </section>
+  </article>
+
+  <script>
+    const h1 = document.querySelector(".sub-header h1");
+
+    const inputModelo = document.getElementById("modelo");
+    const inputImagem = document.getElementById("imagem");
+    const inputTipo = document.getElementById("tipo");
+    const inputCambio = document.getElementById("cambio");
+    const inputPreco = document.getElementById("preco");
+
+    const inputCor = document.getElementById("cor");
+    const inputPlaca = document.getElementById("placa");
+    const inputCapacidade = document.getElementById("capacidade");
+    const inputTanque = document.getElementById("tanque");
+    const inputAno = document.getElementById("ano");
+
+    const inputDescricao = document.getElementById("descricao");
+
+    const imgPreview = document.querySelector(".carro-img img");
+
+    function carregarCarro() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      if (!id) {
+          console.error("Nenhum ID foi passado na URL.");
+          return;
+      }
+
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+
+          let dados = JSON.parse(this.responseText);
+
+          h1.innerHTML = `Editar ${dados.modelo}`;
+
+          inputModelo.value = dados.modelo;
+          inputImagem.value = dados.imagem;
+          inputTipo.value = dados.tipo;
+          inputCambio.value = dados.cambio;
+          inputPreco.value = dados.preco;
+
+          inputCor.value = dados.cor;
+          inputPlaca.value = dados.placa;
+          inputCapacidade.value = dados.capacidade;
+          inputTanque.value = dados.tanque;
+          inputAno.value = dados.ano;
+
+          inputDescricao.value = dados.descricao;
+
+          imgPreview.src = dados.imagem;
+          
+        }
+      };
+
+      xmlhttp.open("GET", "../php/listarCarros.php?id=" + id, true);
+      xmlhttp.send();
+    }
+
+    function alterarCarro() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      if (!id) {
+        alert("ID do carro não encontrado.");
+        return;
+      }
+
+      const dados = {
+        id_carro: parseInt(id),
+        modelo: inputModelo.value.trim(),
+        imagem: inputImagem.value.trim(),
+        tipo: inputTipo.value.trim(),
+        cambio: inputCambio.value,
+        preco: parseFloat(inputPreco.value),
+
+        cor: inputCor.value.trim(),
+        placa: inputPlaca.value.trim(),
+        capacidade: parseInt(inputCapacidade.value),
+        tanque: parseInt(inputTanque.value),
+        ano: parseInt(inputAno.value),
+
+        descricao: inputDescricao.value.trim()
+      };
+
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          const resposta = JSON.parse(this.responseText);
+
+          if (resposta.sucesso) {
+            alert("Carro alterado com sucesso!");
+            window.location.href = "carros.html";
+          } else {
+            alert("Erro: " + resposta.erro);
+          }
+        }
+      };
+
+      xmlhttp.open("POST", "../php/alterarCarro.php", true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xmlhttp.send(JSON.stringify(dados));
+    }
+
+    function excluirCarro() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      if (!id) {
+        alert("ID do carro não encontrado.");
+        return;
+      }
+
+      if (!confirm("Tem certeza que deseja excluir este carro?")) {
+        return;
+      }
+
+      const dados = { id_carro: parseInt(id) };
+
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          const resposta = JSON.parse(this.responseText);
+
+          if (resposta.sucesso) {
+            alert("Carro excluído com sucesso!");
+            window.location.href = "carros.html";
+          } else {
+            alert("Erro: " + resposta.erro);
+          }
+        }
+      };
+
+      xmlhttp.open("POST", "../php/excluirCarro.php", true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xmlhttp.send(JSON.stringify(dados));
+    }
+
+    window.onload = carregarCarro;
+  
+  </script>
+</body>
+</html>

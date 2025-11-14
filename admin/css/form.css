@@ -1,0 +1,155 @@
+/* ===== MAIN ===== */
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centraliza tudo */
+    gap: 2rem;
+}
+
+/* ===== FORM ===== */
+.conteudo main form {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    border: 1px solid #ececec;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 700px; /* evita form gigante */
+}
+
+/* ===== GRID DAS COLUNAS ===== */
+.conteudo main form .flxcntr {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+}
+
+/* ===== COLUNAS ===== */
+.conteudo main form .flxcntr > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    flex: 1;
+}
+
+/* ===== LABELS ===== */
+.conteudo main form label {
+    font-weight: 600;
+    color: #3b3b3b;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ===== INPUT, SELECT, TEXTAREA ===== */
+.conteudo main form input,
+.conteudo main form select,
+.conteudo main form textarea {
+    border: 1px solid #d4d7dd;
+    background: #fdfdfd;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: 0.15s ease-in-out;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.conteudo main form input:hover,
+.conteudo main form select:hover,
+.conteudo main form textarea:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0px 2px 2px rgba(53, 98, 233, 0.548);
+}
+
+.conteudo main form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #fdfdfd url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path fill='black' d='M0 0 L8 8 L16 0 Z'/></svg>") no-repeat right 12px center;
+    background-size: 12px;
+}
+
+.conteudo main form input:focus,
+.conteudo main form select:focus,
+.conteudo main form textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(53,99,233,0.15);
+}
+
+/* ===== TEXTAREA ===== */
+.conteudo main form textarea {
+    resize: none;
+    height: 120px;
+}
+
+/* ===== BOTÕES ===== */
+.conteudo main form .flxbtw {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0 3rem;
+}
+
+.conteudo main form button {
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: 0.15s ease;
+    border: none;
+    color: white;
+}
+
+.conteudo main form button:nth-of-type(1) {
+    background: #2b58df;
+}
+
+.conteudo main form button:nth-of-type(1):hover {
+    background: #507bfa;
+}
+
+.conteudo main form button:nth-of-type(2) {
+    background: #c70948;
+}
+
+.conteudo main form button:nth-of-type(2):hover {
+    background: #f81762;
+}
+
+/* ===== IMAGEM DO CARRO ===== */
+.carro-img {
+    width: 100%;
+    max-width: 700px;
+    height: 315px;
+    margin: 0 auto;
+    background-color: white;
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.8rem;
+}
+
+.carro-img:hover {
+    box-shadow: 0 0px 6px 2px rgba(53, 98, 233, 0.548);
+}
+
+.carro-img img {
+    height: 100%;
+    object-fit: contain;
+    max-height: 300px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 900px) {
+    .conteudo main form .flxcntr {
+        flex-direction: column;
+    }
+}

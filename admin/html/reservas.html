@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>admin Rent a Car</title>
+  <link rel="stylesheet" href="../css/geral.css">
+  <link rel="stylesheet" href="../css/tabela.css">
+  <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+</head>
+<body>
+   <header class="bgw brdr flxbtw">
+      <h1>Rent a Car</h1>
+
+      <section class="usuarionav">
+          <a href="../../cliente/php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
+          <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+          <i class="fa-solid fa-user"></i>
+      </section>
+
+    <button class="menu-btn" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+  </header>
+
+  <article class="container">
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i></i> Dashboard</a></li>
+        <li><a href="./reservas.html"><i class="fa-solid fa-calendar-days"></i> Reservas</a></li>
+        <li><a href="./carros.html"><i class="fa-solid fa-right-from-bracket"></i></i> Carros</a></li>
+        <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      </ul>
+    </nav>
+
+    <section class="conteudo">
+
+      <section class="sub-header">
+        <h1>Reservas</h1>
+        <section class="bdpesquisa brdr">
+          <input type="text" id="pesquisa" placeholder="Pesquise por reservas aqui...">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </section>
+      </section>
+
+        <main>
+        
+          <button class="btn" onclick=""><i class="fa-solid fa-plus"></i> Adicionar Reserva</button>
+
+          <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Período</th>
+                    <th>Carro</th>
+                    <th>Valor Pago</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+      </main>
+    </section>
+  </article>
+
+  <script>
+    function listar() {
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+
+          let dados = JSON.parse(this.responseText);
+
+          const tbody = document.querySelector("tbody");
+          tbody.innerHTML = "";
+
+          dados.forEach(item => {
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+              <td>${item.nome}</td>
+              <td>${item.periodo}</td>
+              <td>${item.carro}</td>
+              <td>R$${item.valor_pago}</td>
+              <td class="acoes">
+                <button class="concluir" onclick="concluir(${item.id})">
+                  <i class="fa-solid fa-check"></i>
+                </button>
+                <button class="excluir" onclick="excluir(${item.id})">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </td>
+            `;
+
+            tbody.appendChild(tr);
+          });
+        }
+      };
+      xmlhttp.open("GET", "../php/listarReservas.php", true);
+      xmlhttp.send();
+    }
+
+    window.onload = function() {
+        listar();
+    };
+  
+  </script>
+</body>
+</html>

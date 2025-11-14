@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>admin Rent a Car</title>
+  <link rel="stylesheet" href="../css/geral.css">
+  <link rel="stylesheet" href="../css/form.css">
+  <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+</head>
+<body>
+   <header class="bgw brdr flxbtw">
+      <h1>Rent a Car</h1>
+
+      <section class="usuarionav">
+          <a href="../../cliente/php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
+          <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+          <i class="fa-solid fa-user"></i>
+      </section>
+
+    <button class="menu-btn" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+  </header>
+
+  <article class="container">
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i></i> Dashboard</a></li>
+        <li><a href="./reservas.html"><i class="fa-solid fa-calendar-days"></i> Reservas</a></li>
+        <li><a href="./carros.html"><i class="fa-solid fa-right-from-bracket"></i></i> Carros</a></li>
+        <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      </ul>
+    </nav>
+
+    <section class="conteudo">
+
+      <section class="sub-header">
+        <h1>Adicionar Carro</h1>
+      </section>
+
+      <main class="flxcntr">
+        <form class="bgw">
+          <section class="flxcntr">
+            <div>
+              <label>Modelo<input id="modelo" type="text"></label>
+              <label>Imagem<input id="imagem" type="text"></label>
+              <label>Tipo<input id="tipo" type="text"></label>
+              <label>Câmbio
+                <select id="cambio">
+                  <option value="Manual">Manual</option>
+                  <option value="Automático">Automático</option>
+                  <option value="CVT">CVT</option>
+                </select>
+              </label>
+              <label>Preço (R$)<input id="preco" type="number" step="0.01"></label>
+            </div>
+
+            <div>
+              <label>Cor<input id="cor" type="text"></label>
+              <label>Placa<input id="placa" type="text"></label>
+              <label>Capacidade<input id="capacidade" type="number" min="1"></label>
+              <label>Tanque<input id="tanque" type="number" min="0"></label>
+              <label>Ano<input id="ano" type="number" min="1800" max="2099"></label>
+            </div>
+          </section>
+
+          <label>Descrição<textarea id="descricao" rows="4"></textarea></label>
+
+          <div class="flxbtw">
+            <button type="button" class="adicionar" onclick="adicionarCarro()">Adicionar</button>
+            <button type="button" class="cancelar" onclick="history.back()">Cancelar</button>
+          </div>
+        </form>
+    </main>
+    </section>
+  </article>
+
+  <script>
+    const inputModelo = document.getElementById("modelo");
+    const inputImagem = document.getElementById("imagem");
+    const inputTipo = document.getElementById("tipo");
+    const inputCambio = document.getElementById("cambio");
+    const inputPreco = document.getElementById("preco");
+
+    const inputCor = document.getElementById("cor");
+    const inputPlaca = document.getElementById("placa");
+    const inputCapacidade = document.getElementById("capacidade");
+    const inputTanque = document.getElementById("tanque");
+    const inputAno = document.getElementById("ano");
+
+    const inputDescricao = document.getElementById("descricao");
+
+    const imgPreview = document.querySelector(".carro-img img");
+
+    function adicionarCarro() {
+
+      const dados = {
+        modelo: inputModelo.value.trim(),
+        imagem: inputImagem.value.trim(),
+        tipo: inputTipo.value.trim(),
+        cambio: inputCambio.value,
+        preco: parseFloat(inputPreco.value),
+
+        cor: inputCor.value.trim(),
+        placa: inputPlaca.value.trim(),
+        capacidade: parseInt(inputCapacidade.value),
+        tanque: parseInt(inputTanque.value),
+        ano: parseInt(inputAno.value),
+
+        descricao: inputDescricao.value.trim()
+      };
+
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          const resposta = JSON.parse(this.responseText);
+
+          if (resposta.sucesso) {
+            alert("Carro adicionado com sucesso!");
+            window.location.href = "carros.html";
+          } else {
+            alert("Erro: " + resposta.erro);
+          }
+        }
+      };
+
+      xmlhttp.open("POST", "../php/adicionarCarro.php", true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xmlhttp.send(JSON.stringify(dados));
+    }
+  </script>
+
+</body>
+</html>
