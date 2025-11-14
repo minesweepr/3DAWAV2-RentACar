@@ -12,7 +12,7 @@ if($email==='' || $senha===''){
 
 if($email==='adm@adm' && $senha==='4DM'){
     $_SESSION['usuario_logado']=['id_usuario'=>-1, 'email'=>$email];
-    echo json_encode(['sucesso' => true, 'mensagem' => 'Bem-vindo, administrador!', 'redirect' => '../admin/index.html']);
+    echo json_encode(['sucesso' => true, 'mensagem' => 'Bem-vindo, administrador!', 'redirect' => '../../admin/html/dashboard.html']);
     exit();
 }
 
