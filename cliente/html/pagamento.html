@@ -207,6 +207,8 @@
             const id=new URLSearchParams(window.location.search).get("id");
             const data_inicio=document.querySelectorAll('input[type="date"]')[0].value;
             const data_fim=document.querySelectorAll('input[type="date"]')[1].value;
+            const horario_inicio=document.querySelectorAll('input[type="time"]')[0].value;
+            const horario_fim=document.querySelectorAll('input[type="time"]')[1].value;
             const lugar=document.querySelectorAll("select")[0].value;
             const valor_pago=parseFloat(document.getElementById("total").textContent.replace("R$", "").trim());
         
@@ -214,6 +216,8 @@
             formData.append("id_carro", id);
             formData.append("data_inicio", data_inicio);
             formData.append("data_fim", data_fim);
+            formData.append("horario_inicio", horario_inicio);
+            formData.append("horario_fim", horario_fim);
             formData.append("lugar", lugar);
             formData.append("valor_pago", valor_pago);
         

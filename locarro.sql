@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 13, 2025 at 03:13 AM
+-- Generation Time: Nov 14, 2025 at 05:46 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.4.0
 
@@ -34,23 +34,24 @@ CREATE TABLE IF NOT EXISTS `aluguel` (
   `id_carro` int NOT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date DEFAULT NULL,
-  `lugar` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `horario_inicio` time NOT NULL,
+  `horario_fim` time NOT NULL,
+  `lugar` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
   `valor_pago` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id_aluguel`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_carro` (`id_carro`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `aluguel`
 --
 
-INSERT INTO `aluguel` (`id_aluguel`, `id_usuario`, `id_carro`, `data_inicio`, `data_fim`, `lugar`, `valor_pago`) VALUES
-(1, 2, 2, '2025-11-12', '2025-11-13', 'Rio de Janeiro', 130.00),
-(2, 2, 6, '2025-11-12', '2025-11-14', 'Bahia', 640.00),
-(8, 2, 2, '2025-11-13', '2025-11-14', 'São Paulo', 130.00),
-(9, 2, 2, '2025-11-29', '2025-12-06', 'Rio Grande do Sul', 910.00),
-(10, 2, 1, '2025-11-14', '2025-11-28', 'Rio Grande do Sul', 2086.00);
+INSERT INTO `aluguel` (`id_aluguel`, `id_usuario`, `id_carro`, `data_inicio`, `data_fim`, `horario_inicio`, `horario_fim`, `lugar`, `valor_pago`) VALUES
+(13, 2, 12, '2025-11-17', '2025-11-26', '13:30:00', '13:30:00', 'São Paulo', 1170.00),
+(14, 2, 6, '2025-11-14', '2025-11-17', '06:30:00', '23:00:00', 'Rio de Janeiro', 960.00),
+(15, 11, 3, '2025-11-28', '2025-12-01', '06:10:00', '06:30:00', 'Rio Grande do Sul', 477.00),
+(16, 12, 4, '2025-11-06', '2025-11-10', '14:30:00', '14:30:00', 'Rio de Janeiro', 652.00);
 
 -- --------------------------------------------------------
 
@@ -61,10 +62,10 @@ INSERT INTO `aluguel` (`id_aluguel`, `id_usuario`, `id_carro`, `data_inicio`, `d
 DROP TABLE IF EXISTS `carro`;
 CREATE TABLE IF NOT EXISTS `carro` (
   `id_carro` int NOT NULL AUTO_INCREMENT,
-  `modelo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `tipo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `modelo` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `tipo` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `preco` decimal(10,2) NOT NULL,
-  `placa` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `placa` varchar(7) COLLATE utf8mb4_general_ci NOT NULL,
   `ano` int DEFAULT NULL,
   `cor` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `tanque` int NOT NULL,
@@ -104,21 +105,23 @@ DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE IF NOT EXISTS `cliente` (
   `id_cliente` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `cpf` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cpf` char(15) COLLATE utf8mb4_general_ci NOT NULL,
   `telefone` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `endereco` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `id_usuario` int DEFAULT NULL,
   PRIMARY KEY (`id_cliente`),
   UNIQUE KEY `cpf` (`cpf`),
   KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cliente`
 --
 
 INSERT INTO `cliente` (`id_cliente`, `nome`, `cpf`, `telefone`, `endereco`, `id_usuario`) VALUES
-(1, 'Fulano de Tal', '123.456.789-00', '(21) 99999-9999', 'Rua dos Bobos, 100', 2);
+(1, 'Fulano de Tal', '123.456.789-00', '(21) 99999-9999', 'Rua dos Bobos, 100', 2),
+(9, 'Vinicius Nunes', '982.327.230-17', '(55) 2012-1666', 'Rua dos Anjos, 35', 11),
+(10, 'Thiago Farias', '796.275.380-35', '(21) 2734-3215', 'Rua do Colégio, 42', 12);
 
 -- --------------------------------------------------------
 
@@ -132,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `email` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `senha` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `usuario`
@@ -140,7 +143,9 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`id_usuario`, `email`, `senha`) VALUES
 (-1, 'adm@adm', '4DM'),
-(2, 'teste@gmail.com', 'teste');
+(2, 'teste@gmail.com', 'teste'),
+(11, 'vzn@gmail.com', 'vzn123'),
+(12, 'thiagoF@gmail.com', 'TheGoat');
 
 --
 -- Constraints for dumped tables
