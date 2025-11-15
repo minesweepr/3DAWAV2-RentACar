@@ -24,9 +24,9 @@
   <article class="container">
     <nav class="menu" id="menu">
       <ul>
-        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i></i> Dashboard</a></li>
-        <li><a href="./reservas.html"><i class="fa-solid fa-calendar-days"></i> Reservas</a></li>
-        <li><a href="./carros.html"><i class="fa-solid fa-right-from-bracket"></i></i> Carros</a></li>
+        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="./alugueis.html"><i class="fa-solid fa-calendar-days"></i> Aluguel</a></li>
+        <li><a href="./carros.html"><i class="fa-solid fa-car"></i>Carros</a></li>
         <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
       </ul>
     </nav>
@@ -50,7 +50,6 @@
                 <select id="cambio">
                   <option value="Manual">Manual</option>
                   <option value="Automático">Automático</option>
-                  <option value="CVT">CVT</option>
                 </select>
               </label>
               <label>Preço (R$)<input id="preco" type="number" step="0.01"></label>
@@ -110,7 +109,7 @@
 
           let dados = JSON.parse(this.responseText);
 
-          h1.innerHTML = `Editar ${dados.modelo}`;
+          h1.innerHTML = `Editar ${dados.modelo} - ID ${dados.id_carro}`;
 
           inputModelo.value = dados.modelo;
           inputImagem.value = dados.imagem;

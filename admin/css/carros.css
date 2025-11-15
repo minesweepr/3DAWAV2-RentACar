@@ -79,6 +79,12 @@
     margin: 0 0 1rem 0;
 }
 
+ul.detalhes 
+{
+    display: flex;
+    gap: 20px;
+}
+
 .carro img {
     width: 100%;
     margin: 0.5rem 0;

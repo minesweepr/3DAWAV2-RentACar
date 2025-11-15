@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>admin Rent a Car</title>
+  <link rel="stylesheet" href="../css/geral.css">
+  <link rel="stylesheet" href="../css/tabela.css">
+  <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+</head>
+<body>
+   <header class="bgw brdr flxbtw">
+      <h1>Rent a Car</h1>
+
+      <section class="usuarionav">
+          <a href="../../cliente/php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
+          <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+          <i class="fa-solid fa-user"></i>
+      </section>
+
+    <button class="menu-btn" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+  </header>
+
+  <article class="container">
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="./alugueis.html"><i class="fa-solid fa-calendar-days"></i> Aluguel</a></li>
+        <li><a href="./carros.html"><i class="fa-solid fa-car"></i>Carros</a></li>
+        <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      </ul>
+    </nav>
+
+    <section class="conteudo">
+
+      <section class="sub-header">
+        <h1>Aluguel</h1>
+        <section class="bdpesquisa brdr search" data-target="listarAluguel.php">
+          <input type="text" id="pesquisa" placeholder="Pesquise pelo nome, modelo ou data...">
+          <i class="fa-solid fa-xmark"></i>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </section>
+      </section>
+
+        <main>
+        
+          <button class="btn" onclick="window.location.href = './alugar.html'"><i class="fa-solid fa-plus"></i> Adicionar Aluguel</button>
+
+          <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Período</th>
+                    <th>Carro</th>
+                    <th>Valor Pago</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+      </main>
+    </section>
+  </article>
+
+  <script>
+    function listar(filtro = "") {
+      let xmlhttp = new XMLHttpRequest();
+      let url = "../php/listarAluguel.php";
+      if (filtro) {
+        url += "?q=" + encodeURIComponent(filtro);
+      }
+
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          let dados = JSON.parse(this.responseText);
+          preencherTabela(dados);
+        }
+      };
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    }
+
+    function preencherTabela(dados) {
+      const tbody = document.querySelector("tbody");
+      tbody.innerHTML = "";
+
+      dados.forEach(item => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${item.nome}</td>
+          <td>${item.periodo}</td>
+          <td>${item.carro}</td>
+          <td>${item.valor_pago}</td>
+          <td class="acoes">
+            <button class="editar" onclick="location.href='editarAluguel.html?id=${item.id_aluguel}'">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="excluir" onclick="excluirAluguel(${item.id_aluguel})">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function excluirAluguel(id) {
+
+      if (!id) {
+        alert("ID do aluguel não encontrado.");
+        return;
+      }
+
+      if (!confirm("Tem certeza que deseja excluir este aluguel?")) return;
+
+      const dados = { id_aluguel: parseInt(id) };
+
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          const resposta = JSON.parse(this.responseText);
+
+          if (resposta.sucesso) {
+            alert("Aluguel excluído com sucesso!");
+            window.location.href = "alugueis.html";
+          } else {
+            alert("Erro: " + (resposta.erro || "Ocorreu um problema ao excluir."));
+          }
+        }
+      };
+
+      xmlhttp.open("POST", "../php/excluirAluguel.php", true);
+      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xmlhttp.send(JSON.stringify(dados));
+    }
+
+    const inputPesquisa = document.getElementById("pesquisa");
+
+    document.addEventListener("DOMContentLoaded", function() {
+      listar();
+
+      const lupa = document.querySelector(".bdpesquisa i.fa-magnifying-glass");
+      if (lupa) {
+        lupa.addEventListener("click", function() {
+          listar(inputPesquisa.value.trim());
+        });
+      }
+      
+      const cancelar = document.querySelector("section.bdpesquisa i.fa-xmark");
+      if (cancelar) {
+        cancelar.addEventListener("click", function() {
+          inputPesquisa.value = "";
+          listar();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

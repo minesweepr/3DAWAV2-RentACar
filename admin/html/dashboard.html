@@ -22,9 +22,9 @@
   <article class="container" >
     <nav class="menu" id="menu">
       <ul>
-        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i></i> Dashboard</a></li>
-        <li><a href="./reservas.html"><i class="fa-solid fa-calendar-days"></i> Reservas</a></li>
-        <li><a href="./carros.html"><i class="fa-solid fa-right-from-bracket"></i></i> Carros</a></li>
+        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="./alugueis.html"><i class="fa-solid fa-calendar-days"></i> Aluguel</a></li>
+        <li><a href="./carros.html"><i class="fa-solid fa-car"></i> Carros</a></li>
         <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
       </ul>
     </nav>
@@ -32,6 +32,13 @@
     <section class="conteudo" id="dashboard">
       <section class="sub-header">
         <h1>Dashboard</h1>
+        <section class="filtro-data">
+          <label for="dataBusca">Escolha o dia:</label>
+          <input type="date" id="dataBusca">
+
+          <button onclick="buscarPorData()">Buscar</button>
+        </section>
+
       </section>
 
       <main>
@@ -42,15 +49,15 @@
             <span id="receita">R$20.000,00 </span>
           </section>
           <section class="card">
-            <p>Reservas Ativas</p>
-            <span id="reservas">20</span>
+            <p>Alugueis Ativos Hoje</p>
+            <span id="alugueis">20</span>
           </section>
           <section class="card">
-            <p>Retiradas Hoje</p>
+            <p>Retiradas</p>
             <span id="retiradas">6</span>
           </section>
           <section class="card">
-            <p>Devoluções Hoje</p>
+            <p>Devoluções</p>
             <span id="devolucoes">3</span>
           </section>
         </div>
@@ -60,7 +67,62 @@
   </article>
 
   <script>
-    
+    function executarDashboard(dataSelecionada = null) {
+      let xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+
+              let dados = JSON.parse(xhr.responseText);
+
+              document.getElementById("receita").innerHTML    = dados.receita_mes;
+              document.getElementById("alugueis").innerHTML   = dados.alugueis_ativos;
+              document.getElementById("retiradas").innerHTML  = dados.retiradas;
+              document.getElementById("devolucoes").innerHTML = dados.devolucoes;
+          }
+      };
+
+      xhr.open("POST", "../php/consultarDashboard.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      let params = "";
+
+      if (dataSelecionada !== null) {
+          params = "data=" + encodeURIComponent(dataSelecionada);
+      }
+
+      xhr.send(params);
+    }
+
+
+    window.onload = function () {
+      colocarDataDeHojeNoInput();
+      executarDashboard(); 
+    };
+
+    function buscarPorData() {
+      let data = document.getElementById("dataBusca").value;
+
+      if (!data) {
+          alert("Escolha uma data!");
+          return;
+      }
+
+      executarDashboard(data);
+    }
+
+    function colocarDataDeHojeNoInput() {
+      let hoje = new Date();
+      let ano = hoje.getFullYear();
+      let mes = hoje.getMonth() + 1;
+      let dia = hoje.getDate();
+
+      if (mes < 10) mes = "0" + mes;
+      if (dia < 10) dia = "0" + dia;
+
+      document.getElementById("dataBusca").value = ano + "-" + mes + "-" + dia;
+    }
   </script>
+
 </body>
 </html>

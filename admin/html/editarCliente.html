@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Cliente - Rent a Car</title>
+  <link rel="stylesheet" href="../css/geral.css">
+  <link rel="stylesheet" href="../css/form.css">
+  <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="bgw brdr flxbtw">
+  <h1>Rent a Car</h1>
+  <section class="usuarionav">
+      <a href="../../cliente/php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
+      <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+      <i class="fa-solid fa-user"></i>
+  </section>
+  <button class="menu-btn" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+</header>
+
+<article class="container">
+  <nav class="menu" id="menu">
+    <ul>
+      <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="./alugueis.html"><i class="fa-solid fa-calendar-days"></i> Aluguel</a></li>
+      <li><a href="./carros.html"><i class="fa-solid fa-car"></i> Carros</a></li>
+      <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+    </ul>
+  </nav>
+
+  <section class="conteudo">
+    <section class="sub-header">
+      <h1>Editar Cliente</h1>
+    </section>
+
+    <main class="flxcntr">
+      <form class="bgw">
+        <section class="flxcntr">
+          <div>
+            <label>Nome:<input id="nome" type="text"></label>
+            <label>CPF:<input id="cpf" type="text"></label>
+          </div>
+          <div>
+            <label>Telefone:<input id="telefone" type="text"></label>
+            <label>Endereço:<input id="endereco" type="text"></label>
+          </div>
+        </section>
+        
+        <input id="id_cliente" type="number" hidden disabled>
+        <button type="button" class="salvar" onclick="alterarCliente()">Salvar</button>
+      </form>
+    </main>
+  </section>
+</article>
+
+<script>
+const inputIdCliente = document.getElementById("id_cliente");
+const inputNome = document.getElementById("nome");
+const inputCpf = document.getElementById("cpf");
+const inputTelefone = document.getElementById("telefone");
+const inputEndereco = document.getElementById("endereco");
+
+function carregarCliente() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+      console.error("Nenhum ID foi passado na URL.");
+      return;
+  }
+
+  let xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      const dados = JSON.parse(this.responseText);
+
+      if (!dados) {
+        alert("Cliente não encontrado!");
+        return;
+      }
+
+      inputIdCliente.value = dados.id_cliente;
+      inputNome.value = dados.nome;
+      inputCpf.value = dados.cpf;
+      inputTelefone.value = dados.telefone;
+      inputEndereco.value = dados.endereco;
+    }
+  };
+
+  xmlhttp.open("GET", "../php/listarClientes.php?id=" + id, true);
+  xmlhttp.send();
+}
+
+function alterarCliente() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("ID do cliente não encontrado.");
+    return;
+  }
+
+  const dados = {
+    id_cliente: parseInt(id),
+    nome: inputNome.value.trim(),
+    cpf: inputCpf.value.trim(),
+    telefone: inputTelefone.value.trim(),
+    endereco: inputEndereco.value.trim(),
+  };
+
+  let xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      const resposta = JSON.parse(this.responseText);
+
+      if (resposta.sucesso) {
+        alert("Cliente alterado com sucesso!");
+        window.location.href = "clientes.html";
+      } else {
+        alert("Erro: " + (resposta.erro || "Ocorreu um problema ao alterar."));
+      }
+    }
+  };
+
+  xmlhttp.open("POST", "../php/alterarCliente.php", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.send(JSON.stringify(dados));
+}
+
+window.onload = carregarCliente;
+</script>
+</body>
+</html>

@@ -23,9 +23,9 @@
     <article class="container">
       <nav class="menu" id="menu">
         <ul>
-          <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i></i> Dashboard</a></li>
-          <li><a href="./reservas.html"><i class="fa-solid fa-calendar-days"></i> Reservas</a></li>
-          <li><a href="./carros.html"><i class="fa-solid fa-right-from-bracket"></i></i> Carros</a></li>
+          <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+          <li><a href="./alugueis.html"><i class="fa-solid fa-calendar-days"></i> Aluguel</a></li>
+          <li><a href="./carros.html"><i class="fa-solid fa-car"></i>Carros</a></li>
           <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
         </ul>
       </nav>
@@ -34,8 +34,9 @@
 
         <section class="sub-header">
           <h1>Carros</h1>
-          <section class="bdpesquisa brdr">
-            <input type="text" id="pesquisa" placeholder="Pesquise por carros aqui...">
+          <section class="bdpesquisa brdr search" data-target="listarCarros.php">
+            <input type="text" id="pesquisa" placeholder="Pesquise pelo modelo, tipo ou cor...">
+            <i class="fa-solid fa-xmark"></i>
             <i class="fa-solid fa-magnifying-glass"></i>
           </section>
         </section>
@@ -52,51 +53,69 @@
       </section>
     </article>
 
-<script>
-  function listar() {
-    let xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
+  <script>
+    function listarCarros(filtro = "") {
+      let xmlhttp = new XMLHttpRequest();
+      let url = "../php/listarCarros.php";
+      if (filtro) {
+        url += "?q=" + encodeURIComponent(filtro);
+      }
 
-        let dados = JSON.parse(this.responseText);
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          let dados = JSON.parse(this.responseText);
+          const carrosContainer = document.getElementById("listaCarros");
+          carrosContainer.innerHTML = "";
 
-        const carrosContainer = document.getElementById("listaCarros");
-        carrosContainer.innerHTML = " ";
+          dados.forEach(carro => {
+            const section = document.createElement("section");
+            section.className = "carro bgw";
 
-        dados.forEach(carro => {
+            section.innerHTML = `
+              <h4>${carro.modelo}</h4>
+              <p>${carro.tipo}</p>
+              <img src="${carro.imagem}">
+              <ul class="detalhes flxcntr">
+                <li><i class="fa-solid fa-gas-pump"></i> ${carro.tanque}</li>
+                <li><i class="fa-solid fa-gear"></i> ${carro.cambio}</li>
+                <li><i class="fa-solid fa-user-group"></i> ${carro.capacidade}</li>
+              </ul>
+              <div class="preco flxcntr">
+                <h4>R$${carro.preco} <span>/dia</span></h4>
+                <button onclick="location.href='editarCarro.html?id=${carro.id_carro}'">Editar</button>
+              </div>
+            `;
+            carrosContainer.appendChild(section);
+          });
+        }
+      };
 
-          const section=document.createElement("section");
-          section.className = "carro bgw";
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    }
 
-          section.innerHTML=`
-            <h4>${carro.modelo}</h4>
-            <p>${carro.tipo}</p>
-            <img src="${carro.imagem}">
-            <ul class="detalhes flxcntr">
-              <li><i class="fa-solid fa-gas-pump"></i> ${carro.cor}</li>
-              <li><i class="fa-solid fa-gear"></i> ${carro.cambio}</li>
-              <li><i class="fa-solid fa-user-group"></i> ${carro.capacidade}</li>
-            </ul>
-            <div class="preco flxcntr">
-              <h4>R$${carro.preco} <span>/dia</span></h4>
-              <button onclick="location.href='editarCarro.html?id=${carro.id_carro}'">Editar</button>
-            </div>
-          `;
+    const inputPesquisa = document.getElementById("pesquisa");
 
-          carrosContainer.appendChild(section);
+    document.addEventListener("DOMContentLoaded", function() {
+      listarCarros();
+
+      const lupa = document.querySelector(".bdpesquisa i.fa-magnifying-glass");
+      if (lupa) {
+        lupa.addEventListener("click", function() {
+          listarCarros(inputPesquisa.value.trim());
         });
       }
-    };
-    
-    xmlhttp.open("GET", "../php/listarCarros.php", true);
-    xmlhttp.send();
-  }
-
-  window.onload = function() {
-      listar();
-  };
-
+      
+      const cancelar = document.querySelector("section.bdpesquisa i.fa-xmark");
+      if (cancelar) {
+        cancelar.addEventListener("click", function() {
+          inputPesquisa.value = "";
+          listarCarros();
+        });
+      }
+    });
 </script>
+
    
 </body>
 </html>

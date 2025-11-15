@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>admin Rent a Car</title>
+  <link rel="stylesheet" href="../css/geral.css">
+  <link rel="stylesheet" href="../css/form.css">
+  <script src="https://kit.fontawesome.com/86b61fdc16.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="bgw brdr flxbtw">
+  <h1>Rent a Car</h1>
+  <section class="usuarionav">
+      <a href="../../cliente/php/logout.php"><i class="fa-solid fa-right-from-bracket brdr"></i></a>
+      <a href="home.html"><i class="fa-solid fa-home brdr"></i></a>
+      <i class="fa-solid fa-user"></i>
+  </section>
+  <button class="menu-btn" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+</header>
+
+<article class="container">
+  <nav class="menu" id="menu">
+    <ul>
+      <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="./alugueis.html"><i class="fa-solid fa-calendar-days"></i> Aluguel</a></li>
+      <li><a href="./carros.html"><i class="fa-solid fa-car"></i>Carros</a></li>
+      <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
+    </ul>
+  </nav>
+
+  <section class="conteudo">
+    <section class="sub-header">
+      <h1>Editar Aluguel</h1>
+    </section>
+
+    <main class="flxcntr">
+      <form class="bgw">
+        <section class="flxcntr">
+          <div>
+            <label>Código do Carro:<input id="id_carro" type="number" min="0"></label>
+            <label>Data de Início<input id="data_inicio" type="date"></label>
+            <label>Data de Fim<input id="data_fim" type="date"></label>
+            <label>Lugar<input id="lugar" type="text"></label>
+          </div>
+          <div>
+            <label>Código do Usuário:<input id="id_usuario" type="number" min="0"></label>
+            <label>Horário Início<input id="horario_inicio" type="time"></label>
+            <label>Horário Fim<input id="horario_fim" type="time"></label>
+            <label>Valor Pago (R$)<input id="valor_pago" type="number" step="0.01"></label>
+          </div>
+        </section>
+        
+        <input id="id_aluguel" type="number" hidden disabled>
+
+          <button type="button" class="salvar" onclick="alterarAluguel()">Salvar</button>
+      </form>
+    </main>
+  </section>
+</article>
+
+<script>
+const inputIdAluguel = document.getElementById("id_aluguel");
+const inputIdUsuario = document.getElementById("id_usuario");
+const inputIdCarro = document.getElementById("id_carro");
+const inputDataInicio = document.getElementById("data_inicio");
+const inputDataFim = document.getElementById("data_fim");
+const inputHorarioInicio = document.getElementById("horario_inicio");
+const inputHorarioFim = document.getElementById("horario_fim");
+const inputLugar = document.getElementById("lugar");
+const inputValorPago = document.getElementById("valor_pago");
+
+function carregarAluguel() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("Nenhum ID de aluguel foi passado na URL.");
+    return;
+  }
+
+  let xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      
+      const dados = JSON.parse(this.responseText);
+      
+      if (!dados || !dados.id_aluguel) {
+        alert("Aluguel não encontrado!");
+        return;
+      }
+
+      inputIdAluguel.value = dados.id_aluguel;
+      inputIdUsuario.value = dados.id_usuario;
+      inputIdCarro.value = dados.id_carro;
+      inputDataInicio.value = dados.data_inicio;
+      inputDataFim.value = dados.data_fim;
+      inputHorarioInicio.value = dados.horario_inicio;
+      inputHorarioFim.value = dados.horario_fim;
+      inputLugar.value = dados.lugar;
+      inputValorPago.value = dados.valor_pago;
+    }
+  };
+
+  xmlhttp.open("GET", "../php/listarAluguel.php?id=" + id, true);
+  xmlhttp.send();
+}
+
+function alterarAluguel() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("ID do aluguel não encontrado.");
+    return;
+  }
+
+  const dados = {
+    id_aluguel: parseInt(id),
+    id_usuario: parseInt(inputIdUsuario.value),
+    id_carro: parseInt(inputIdCarro.value),
+    data_inicio: inputDataInicio.value,
+    data_fim: inputDataFim.value,
+    horario_inicio: inputHorarioInicio.value,
+    horario_fim: inputHorarioFim.value,
+    lugar: inputLugar.value.trim(),
+    valor_pago: parseFloat(inputValorPago.value)
+  };
+
+  let xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      const resposta = JSON.parse(this.responseText);
+
+      if (resposta.sucesso) {
+        alert("Aluguel alterado com sucesso!");
+        window.location.href = "alugueis.html";
+      } else {
+        alert("Erro: " + (resposta.erro || "Ocorreu um problema ao alterar."));
+      }
+    }
+  };
+
+  xmlhttp.open("POST", "../php/alterarAluguel.php", true);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.send(JSON.stringify(dados));
+}
+
+window.onload = carregarAluguel;
+</script>
+</body>
+</html>

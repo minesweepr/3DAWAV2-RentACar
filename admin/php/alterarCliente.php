@@ -7,7 +7,6 @@ $usuario = "root";
 $senha = "";
 
 $conn = new mysqli($servidor, $usuario, $senha, $database);
-
 if ($conn->connect_error) {
     echo json_encode(["erro" => "Falha na conexão com o banco de dados"]);
     exit;
@@ -15,27 +14,27 @@ if ($conn->connect_error) {
 
 $dados = json_decode(file_get_contents("php://input"), true);
 
-if (!$dados) {
-    echo json_encode(["erro" => "Nenhum dado enviado"]);
+if (!$dados || !isset($dados['id_cliente'])) {
+    echo json_encode(["erro" => "ID do cliente não informado"]);
     exit;
 }
 
 $sql = $conn->prepare("
-    INSERT INTO aluguel
-    (id_usuario, id_carro, data_inicio, data_fim, horario_inicio, horario_fim, lugar, valor_pago)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    UPDATE cliente SET
+        nome = ?,
+        cpf = ?,
+        telefone = ?,
+        endereco = ?
+    WHERE id_cliente = ?
 ");
 
 $sql->bind_param(
-    "iisssssd",
-    $dados["id_usuario"],
-    $dados["id_carro"],
-    $dados["data_inicio"],
-    $dados["data_fim"],
-    $dados["horario_inicio"],
-    $dados["horario_fim"],
-    $dados["lugar"],
-    $dados["valor_pago"]
+    "ssssi",
+    $dados["nome"],
+    $dados["cpf"],
+    $dados["telefone"],
+    $dados["endereco"],
+    $dados["id_cliente"]
 );
 
 if ($sql->execute()) {
@@ -44,5 +43,6 @@ if ($sql->execute()) {
     echo json_encode(["erro" => $conn->error]);
 }
 
+$sql->close();
 $conn->close();
 ?>

@@ -24,9 +24,9 @@
   <article class="container">
     <nav class="menu" id="menu">
       <ul>
-        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i></i> Dashboard</a></li>
-        <li><a href="./reservas.html"><i class="fa-solid fa-calendar-days"></i> Reservas</a></li>
-        <li><a href="./carros.html"><i class="fa-solid fa-right-from-bracket"></i></i> Carros</a></li>
+        <li><a href="./dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="./alugueis.html"><i class="fa-solid fa-calendar-days"></i> Aluguel</a></li>
+        <li><a href="./carros.html"><i class="fa-solid fa-car"></i>Carros</a></li>
         <li><a href="./clientes.html"><i class="fa-solid fa-users"></i> Clientes</a></li>
       </ul>
     </nav>
@@ -34,8 +34,9 @@
     <section class="conteudo">
       <section class="sub-header">
         <h1>Clientes</h1>
-        <section class="bdpesquisa brdr">
-          <input type="text" id="pesquisa" placeholder="Pesquise por clientes aqui...">
+        <section class="bdpesquisa brdr search" data-target="listarClientes.php">
+          <input type="text" id="pesquisa" placeholder="Pesquise pelo nome ou cpf...">
+          <i class="fa-solid fa-xmark"></i>
           <i class="fa-solid fa-magnifying-glass"></i>
         </section>
       </section>
@@ -50,6 +51,8 @@
                   <th>Telefone</th>
                   <th>Email</th>
                   <th>Aluguéis</th>
+                  <th>Ação</th>
+
               </tr>
           </thead>
           <tbody>
@@ -61,11 +64,15 @@
   </article>
 
   <script>
-    function listar() {
+    function listarClientes(filtro = "") {
       let xmlhttp = new XMLHttpRequest();
+      let url = "../php/listarClientes.php";
+      if (filtro) {
+        url += "?q=" + encodeURIComponent(filtro);
+      }
+      
       xmlhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-
           let dados = JSON.parse(this.responseText);
 
           const tbody = document.querySelector("tbody");
@@ -80,19 +87,44 @@
               <td>${item.telefone}</td>
               <td>${item.email}</td>
               <td>${item.alugueis}</td>
+              <td>
+                
+                <button class="editar" onclick="location.href='editarCliente.html?id=${item.id_cliente}'">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+              </td>
             `;
 
             tbody.appendChild(tr);
           });
         }
       };
-      xmlhttp.open("GET", "../php/listarClientes.php", true);
+      xmlhttp.open("GET", url, true);
       xmlhttp.send();
     }
 
-    window.onload = function() {
-        listar();
-    };
+    const inputPesquisa = document.getElementById("pesquisa");
+
+    document.addEventListener("DOMContentLoaded", function() {
+      listarClientes();
+      
+      const lupa = document.querySelector(".bdpesquisa i.fa-magnifying-glass");
+      if (lupa) {
+        lupa.addEventListener("click", function() {
+          const inputPesquisa = document.getElementById("pesquisa");
+          listarClientes(inputPesquisa.value.trim());
+        });
+      }
+      
+      const cancelar = document.querySelector("section.bdpesquisa i.fa-xmark");
+      if (cancelar) {
+        cancelar.addEventListener("click", function() {
+          inputPesquisa.value = "";
+          listarClientes();
+        });
+      }
+    });
   </script>
+
 </body>
 </html>

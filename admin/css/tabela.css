@@ -41,9 +41,16 @@ tbody tr:nth-child(odd){
 }
 .acoes button:nth-child(odd){margin-bottom: 0.5em;}
 
-.concluir{background-color: #99d192;}
+.editar{
+    background-color: #99d192; 
+}
+
+table button.editar {
+    margin: 0;
+    padding: 8px;
+}
 .excluir{background-color: #cf7777;}
 
-.concluir:hover{background-color: #7aba72;}
+.editar:hover{background-color: #7aba72; }
 .excluir:hover{background-color: #bf6262;}
 /*tabela fim*/

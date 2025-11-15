@@ -25,19 +25,27 @@ if (isset($_GET['id'])) {
         echo json_encode(["erro" => "carro não encontrado"]);
     }
 } else {
+    $filtro = isset($_GET['q']) ? $conn->real_escape_string($_GET['q']) : '';
+
     $sql = "
     SELECT 
         car.id_carro,
         car.modelo,
         car.tipo,
+        car.tanque,
         car.imagem,
         car.cor,
         car.cambio,
         car.capacidade,
         car.preco
     FROM carro car
-    ORDER BY car.modelo ASC;
     ";
+
+    if ($filtro) {
+        $sql .= " WHERE car.modelo LIKE '%$filtro%' OR car.tipo LIKE '%$filtro%' OR car.cor LIKE '%$filtro%'";
+    }
+
+    $sql .= " ORDER BY car.modelo ASC;";
 
     $resultado = $conn->query($sql);
 

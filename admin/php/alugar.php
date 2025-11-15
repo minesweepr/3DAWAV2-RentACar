@@ -7,16 +7,30 @@ $usuario = "root";
 $senha = "";
 
 $conn = new mysqli($servidor, $usuario, $senha, $database);
-
 if ($conn->connect_error) {
     echo json_encode(["erro" => "Falha na conexão com o banco de dados"]);
     exit;
 }
 
 $dados = json_decode(file_get_contents("php://input"), true);
-
 if (!$dados) {
     echo json_encode(["erro" => "Nenhum dado enviado"]);
+    exit;
+}
+
+$stmtUser = $conn->prepare("SELECT id_usuario FROM usuario WHERE id_usuario = ?");
+$stmtUser->bind_param("i", $dados["id_usuario"]);
+$stmtUser->execute();
+if ($stmtUser->get_result()->num_rows === 0) {
+    echo json_encode(["erro" => "Usuário não existe"]);
+    exit;
+}
+
+$stmtCar = $conn->prepare("SELECT id_carro FROM carro WHERE id_carro = ?");
+$stmtCar->bind_param("i", $dados["id_carro"]);
+$stmtCar->execute();
+if ($stmtCar->get_result()->num_rows === 0) {
+    echo json_encode(["erro" => "Carro não existe"]);
     exit;
 }
 
