@@ -41,14 +41,14 @@
                     </div>
                 </section>
 
-                <section class="bgw">
+                <section id="retdev" class="bgw">
                     <h2>Informações de Aluguel</h2>
                     <div class="flxcntr">
                         <p>Favor, insira suas informações de aluguel</p>
                         <p>Passo 2 de 4</p>
                     </div>
                     <h4><span>◉</span> Retirada</h4>
-                    <div class="flxcntr">
+                    <div class="flxcntr" id="retirada">
                         <label>Localização<select>
                             <option value="" disabled selected>Selecione sua cidade</option>
                             <option>Rio de Janeiro</option>
@@ -63,7 +63,7 @@
                     </div>
 
                     <h4><span>◉</span> Devolução</h4>
-                    <div class="flxcntr">
+                    <div class="flxcntr" id="devolucao">
                         <label>Localização<select>
                             <option value="" disabled selected>Selecione sua cidade</option>
                             <option>Rio de Janeiro</option>
@@ -140,6 +140,7 @@
                 </section>
             </aside>
         </main>
+        <script src="../js/retiradaDevolucao.js" defer></script>
         <script>
         //informacoes gerais sobre a compra
         function carregarResumo(){
@@ -166,14 +167,7 @@
                             document.querySelector("aside .miniImg + h2").textContent=carro.modelo;
                             document.getElementById("diaria").textContent=`R$${carro.preco}`;
 
-                            //só pra calculadora de preço funcionar direitinho, fiz com q a data ja tivesse pronta
-                            const hoje=new Date();
-                            const amanha=new Date(hoje);
-                            amanha.setDate(hoje.getDate()+1);
-                        
-                            const dataInputs=document.querySelectorAll('input[type="date"]');
-                            dataInputs[0].value=hoje.toISOString().split("T")[0];
-                            dataInputs[1].value=amanha.toISOString().split("T")[0];
+
                         
                             document.getElementById("total").dataset.preco = carro.preco;
                             calcularTotal();

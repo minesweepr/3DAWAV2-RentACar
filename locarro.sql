@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Nov 14, 2025 at 05:46 PM
--- Server version: 9.1.0
--- PHP Version: 8.4.0
+-- Host: 127.0.0.1
+-- Tempo de geração: 15/11/2025 às 22:09
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,67 +18,75 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `locarro`
+-- Banco de dados: `locarro`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aluguel`
+-- Estrutura para tabela `aluguel`
 --
 
-DROP TABLE IF EXISTS `aluguel`;
-CREATE TABLE IF NOT EXISTS `aluguel` (
-  `id_aluguel` int NOT NULL AUTO_INCREMENT,
-  `id_usuario` int NOT NULL,
-  `id_carro` int NOT NULL,
+CREATE TABLE `aluguel` (
+  `id_aluguel` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `id_carro` int(11) NOT NULL,
   `data_inicio` date NOT NULL,
   `data_fim` date DEFAULT NULL,
   `horario_inicio` time NOT NULL,
   `horario_fim` time NOT NULL,
-  `lugar` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `valor_pago` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id_aluguel`),
-  KEY `id_usuario` (`id_usuario`),
-  KEY `id_carro` (`id_carro`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `lugar` varchar(20) NOT NULL,
+  `valor_pago` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `aluguel`
+-- Despejando dados para a tabela `aluguel`
 --
 
 INSERT INTO `aluguel` (`id_aluguel`, `id_usuario`, `id_carro`, `data_inicio`, `data_fim`, `horario_inicio`, `horario_fim`, `lugar`, `valor_pago`) VALUES
 (13, 2, 12, '2025-11-17', '2025-11-26', '13:30:00', '13:30:00', 'São Paulo', 1170.00),
 (14, 2, 6, '2025-11-14', '2025-11-17', '06:30:00', '23:00:00', 'Rio de Janeiro', 960.00),
 (15, 11, 3, '2025-11-28', '2025-12-01', '06:10:00', '06:30:00', 'Rio Grande do Sul', 477.00),
-(16, 12, 4, '2025-11-06', '2025-11-10', '14:30:00', '14:30:00', 'Rio de Janeiro', 652.00);
+(16, 12, 4, '2025-11-06', '2025-11-10', '14:30:00', '14:30:00', 'Rio de Janeiro', 652.00),
+(17, 13, 1, '2025-11-17', '2025-11-20', '09:00:00', '18:00:00', 'São Paulo', 1200.00),
+(18, 14, 2, '2025-11-17', '2025-11-22', '08:30:00', '17:30:00', 'Rio de Janeiro', 950.00),
+(19, 15, 3, '2025-11-17', '2025-11-21', '10:00:00', '16:00:00', 'Belo Horizonte', 800.00),
+(20, 16, 4, '2025-11-17', '2025-11-25', '07:45:00', '19:00:00', 'Curitiba', 1500.00),
+(21, 17, 5, '2025-11-17', '2025-11-23', '09:15:00', '18:30:00', 'Porto Alegre', 1100.00),
+(22, 18, 6, '2025-11-17', '2025-11-27', '08:00:00', '17:45:00', 'Salvador', 1300.00),
+(23, 13, 7, '2025-11-17', '2025-11-19', '09:30:00', '18:00:00', 'São Paulo', 900.00),
+(24, 14, 8, '2025-11-14', '2025-11-17', '08:00:00', '17:00:00', 'Rio de Janeiro', 1100.00),
+(25, 15, 9, '2025-11-13', '2025-11-17', '09:15:00', '18:30:00', 'Belo Horizonte', 950.00),
+(26, 16, 10, '2025-11-12', '2025-11-17', '07:30:00', '18:00:00', 'Curitiba', 1250.00),
+(27, 17, 11, '2025-11-10', '2025-11-17', '08:45:00', '17:45:00', 'Porto Alegre', 1000.00),
+(28, 18, 12, '2025-11-11', '2025-11-17', '09:00:00', '18:00:00', 'Salvador', 1150.00),
+(35, 13, 7, '2025-11-18', '2025-11-18', '09:00:00', '18:00:00', 'São Paulo', 500.00),
+(36, 14, 8, '2025-11-18', '2025-11-18', '08:30:00', '17:30:00', 'Rio de Janeiro', 550.00),
+(37, 15, 9, '2025-11-18', '2025-11-18', '10:00:00', '16:00:00', 'Belo Horizonte', 600.00);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `carro`
+-- Estrutura para tabela `carro`
 --
 
-DROP TABLE IF EXISTS `carro`;
-CREATE TABLE IF NOT EXISTS `carro` (
-  `id_carro` int NOT NULL AUTO_INCREMENT,
-  `modelo` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `tipo` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+CREATE TABLE `carro` (
+  `id_carro` int(11) NOT NULL,
+  `modelo` varchar(100) NOT NULL,
+  `tipo` varchar(50) DEFAULT NULL,
   `preco` decimal(10,2) NOT NULL,
-  `placa` varchar(7) COLLATE utf8mb4_general_ci NOT NULL,
-  `ano` int DEFAULT NULL,
-  `cor` varchar(30) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `tanque` int NOT NULL,
-  `cambio` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `capacidade` int NOT NULL,
-  `descricao` varchar(420) COLLATE utf8mb4_general_ci NOT NULL,
-  `imagem` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id_carro`),
-  UNIQUE KEY `placa` (`placa`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `placa` varchar(7) NOT NULL,
+  `ano` int(11) DEFAULT NULL,
+  `cor` varchar(30) DEFAULT NULL,
+  `tanque` int(11) NOT NULL,
+  `cambio` varchar(15) NOT NULL,
+  `capacidade` int(11) NOT NULL,
+  `descricao` varchar(420) NOT NULL,
+  `imagem` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `carro`
+-- Despejando dados para a tabela `carro`
 --
 
 INSERT INTO `carro` (`id_carro`, `modelo`, `tipo`, `preco`, `placa`, `ano`, `cor`, `tanque`, `cambio`, `capacidade`, `descricao`, `imagem`) VALUES
@@ -98,68 +106,135 @@ INSERT INTO `carro` (`id_carro`, `modelo`, `tipo`, `preco`, `placa`, `ano`, `cor
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cliente`
+-- Estrutura para tabela `cliente`
 --
 
-DROP TABLE IF EXISTS `cliente`;
-CREATE TABLE IF NOT EXISTS `cliente` (
-  `id_cliente` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `cpf` char(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `telefone` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `endereco` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `id_usuario` int DEFAULT NULL,
-  PRIMARY KEY (`id_cliente`),
-  UNIQUE KEY `cpf` (`cpf`),
-  KEY `id_usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `cliente` (
+  `id_cliente` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `cpf` char(15) NOT NULL,
+  `telefone` varchar(15) DEFAULT NULL,
+  `endereco` varchar(200) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cliente`
+-- Despejando dados para a tabela `cliente`
 --
 
 INSERT INTO `cliente` (`id_cliente`, `nome`, `cpf`, `telefone`, `endereco`, `id_usuario`) VALUES
 (1, 'Fulano de Tal', '123.456.789-00', '(21) 99999-9999', 'Rua dos Bobos, 100', 2),
 (9, 'Vinicius Nunes', '982.327.230-17', '(55) 2012-1666', 'Rua dos Anjos, 35', 11),
-(10, 'Thiago Farias', '796.275.380-35', '(21) 2734-3215', 'Rua do Colégio, 42', 12);
+(10, 'Thiago Farias', '796.275.380-35', '(21) 2734-3215', 'Rua do Colégio, 42', 12),
+(17, 'Ana Souza', '123.456.789-67', '(11) 90000-1111', 'Rua das Flores, 120 – São Paulo', 13),
+(18, 'João Lima', '987.654.321-00', '(21) 98888-2222', 'Av. Atlântica, 500 – Rio de Janeiro', 14),
+(19, 'Maria Oliveira', '456.789.123-55', '(31) 97777-3333', 'Rua Tiradentes, 90 – Belo Horizonte', 15),
+(20, 'Carlos Silva', '112.233.445-56', '(41) 96666-4444', 'Rua Paraná, 410 – Curitiba', 16),
+(21, 'Júlia Mendes', '554.433.221-10', '(51) 95555-5555', 'Av. Ipiranga, 890 – Porto Alegre', 17),
+(22, 'Pedro Santos', '998.877.665-44', '(71) 94444-6666', 'Rua Imperial, 77 – Salvador', 18);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estrutura para tabela `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
-CREATE TABLE IF NOT EXISTS `usuario` (
-  `id_usuario` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `senha` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `usuario` (
+  `id_usuario` int(11) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `senha` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `usuario`
+-- Despejando dados para a tabela `usuario`
 --
 
 INSERT INTO `usuario` (`id_usuario`, `email`, `senha`) VALUES
 (-1, 'adm@adm', '4DM'),
 (2, 'teste@gmail.com', 'teste'),
 (11, 'vzn@gmail.com', 'vzn123'),
-(12, 'thiagoF@gmail.com', 'TheGoat');
+(12, 'thiagoF@gmail.com', 'TheGoat'),
+(13, 'ana.souza@gmail.com', '123'),
+(14, 'joao.lima@hotmail.com', 'abc'),
+(15, 'maria.oliveira@yahoo.com', '321'),
+(16, 'carlos.silva@gmail.com', 'senha1'),
+(17, 'julia.mendes@outlook.com', 'teste2024'),
+(18, 'pedro.santos@gmail.com', '987');
 
 --
--- Constraints for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Constraints for table `aluguel`
+-- Índices de tabela `aluguel`
+--
+ALTER TABLE `aluguel`
+  ADD PRIMARY KEY (`id_aluguel`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_carro` (`id_carro`);
+
+--
+-- Índices de tabela `carro`
+--
+ALTER TABLE `carro`
+  ADD PRIMARY KEY (`id_carro`),
+  ADD UNIQUE KEY `placa` (`placa`);
+
+--
+-- Índices de tabela `cliente`
+--
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`id_cliente`),
+  ADD UNIQUE KEY `cpf` (`cpf`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Índices de tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_usuario`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `aluguel`
+--
+ALTER TABLE `aluguel`
+  MODIFY `id_aluguel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT de tabela `carro`
+--
+ALTER TABLE `carro`
+  MODIFY `id_carro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de tabela `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT de tabela `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `aluguel`
 --
 ALTER TABLE `aluguel`
   ADD CONSTRAINT `aluguel_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
   ADD CONSTRAINT `aluguel_ibfk_2` FOREIGN KEY (`id_carro`) REFERENCES `carro` (`id_carro`);
 
 --
--- Constraints for table `cliente`
+-- Restrições para tabelas `cliente`
 --
 ALTER TABLE `cliente`
   ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);

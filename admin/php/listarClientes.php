@@ -6,7 +6,6 @@ $database = "locarro";
 $usuario = "root";
 $senha = "";
 
-// Conexão
 $conn = new mysqli($servidor, $usuario, $senha, $database);
 if ($conn->connect_error) {
     echo json_encode(["erro" => "Falha na conexão com o banco de dados"]);

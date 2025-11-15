@@ -183,7 +183,7 @@ input[type="checkbox"]:not(.cores input){margin-right: 0.68em;}
 .menu-btn.active{transform: rotate(180deg);}
 .usuario{display: none;}
 /*header fim*/
-/*nav*/
+
 .menu{
     position: fixed;
     top: -100%;
@@ -219,13 +219,13 @@ li.active a, li.active a i {
 
 .menu.active{top:0;}
 /*nav fim*/
-/*indicador de navegacao*/
+
 .indicador-nav{
     padding: 1em 2em;
-    color: white; /* sla  a cor*/
+    color: white; 
     user-select: none;
 }
-/*indicador de navegacao fim*/
+
 .sub-header {
     padding: 3rem 4rem;
     width: 100%;
@@ -298,7 +298,6 @@ li.active a, li.active a i {
   text-align: center;
 }
 
-/* Layout padrão (mobile first): 1 card por linha */
 .conteudo main {
   margin: 0 auto;
 }
@@ -317,12 +316,11 @@ i {
     margin: 0 auto;
 }
 
-/* Cards */
 .card {
   background-color: white;
   border-radius: 12px;
   border: 1px solid rgba(0,0,0,0.1);
-  aspect-ratio: 5 / 4; /* mantém proporção responsiva */
+  aspect-ratio: 5 / 4;
   display: flex;
   flex-direction: column;
   justify-content: center;

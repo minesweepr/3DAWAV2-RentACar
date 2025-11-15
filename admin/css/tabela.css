@@ -8,7 +8,6 @@
     grid-template-columns: none;
 }
 
-/*tabela inicio*/
 table{
     background: none;
     border: 1px solid var(--borda);
@@ -53,4 +52,3 @@ table button.editar {
 
 .editar:hover{background-color: #7aba72; }
 .excluir:hover{background-color: #bf6262;}
-/*tabela fim*/

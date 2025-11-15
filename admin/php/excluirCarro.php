@@ -1,7 +1,6 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
 
-// Conexão com o banco
 $servidor = "localhost";
 $database = "locarro";
 $usuario = "root";
