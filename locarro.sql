@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15/11/2025 às 22:09
+-- Tempo de geração: 16/11/2025 às 05:15
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -62,7 +62,17 @@ INSERT INTO `aluguel` (`id_aluguel`, `id_usuario`, `id_carro`, `data_inicio`, `d
 (28, 18, 12, '2025-11-11', '2025-11-17', '09:00:00', '18:00:00', 'Salvador', 1150.00),
 (35, 13, 7, '2025-11-18', '2025-11-18', '09:00:00', '18:00:00', 'São Paulo', 500.00),
 (36, 14, 8, '2025-11-18', '2025-11-18', '08:30:00', '17:30:00', 'Rio de Janeiro', 550.00),
-(37, 15, 9, '2025-11-18', '2025-11-18', '10:00:00', '16:00:00', 'Belo Horizonte', 600.00);
+(37, 15, 9, '2025-11-18', '2025-11-18', '10:00:00', '16:00:00', 'Belo Horizonte', 600.00),
+(46, 11, 3, '2025-11-17', '2025-11-19', '09:00:00', '18:00:00', 'São Paulo', 800.00),
+(47, 12, 4, '2025-11-18', '2025-11-18', '08:00:00', '18:00:00', 'São Paulo', 650.00),
+(48, 15, 5, '2025-11-17', '2025-11-20', '10:00:00', '17:30:00', 'São Paulo', 900.00),
+(49, 16, 6, '2025-11-10', '2025-11-11', '09:00:00', '17:30:00', 'São Paulo', 300.00),
+(50, 17, 7, '2025-11-17', '2025-11-18', '09:00:00', '18:00:00', 'São Paulo', 500.00),
+(51, 18, 8, '2025-11-19', '2025-11-19', '07:00:00', '18:00:00', 'São Paulo', 400.00),
+(52, 13, 9, '2025-11-16', '2025-11-17', '09:30:00', '18:00:00', 'São Paulo', 450.00),
+(53, 14, 10, '2025-11-20', '2025-11-22', '09:00:00', '18:00:00', 'São Paulo', 700.00),
+(56, 13, 10, '2025-11-17', '2025-11-18', '09:00:00', '18:00:00', 'São Paulo', 450.00),
+(57, 14, 11, '2025-11-17', '2025-11-18', '09:00:00', '18:00:00', 'São Paulo', 380.00);
 
 -- --------------------------------------------------------
 
@@ -93,7 +103,7 @@ INSERT INTO `carro` (`id_carro`, `modelo`, `tipo`, `preco`, `placa`, `ano`, `cor
 (1, 'Fiat Argo', 'Hatch', 149.00, 'LVT3721', 2000, 'Preto', 47, 'Manual', 5, 'Argo é um automóvel hatch da Fiat, que foi lançado no Brasil no dia 31 de maio de 2017, para substituir o Punto, Bravo e o Palio. Seu nome remete ao mito grego de Jasão e os Argonautas que viajavam a bordo da nau Argo, construída pelo semideus Argos, sob orientação da deusa Atena.', 'https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/FiatArgo.png'),
 (2, 'Hyundai HB20', 'Hatch', 130.00, 'CYU0528', 2000, 'Cinza', 50, 'Automático', 5, 'Opção com bloco e cabeçote de alumínio, 3 cilindros, 12 válvulas e 80 cv de potência, ele oferece performance de um motor maior com consumo de um motor menor. O sistema de partida a frio E-start dispensa reservatório de gasolina, melhorando a performance e reduzindo emissões de poluentes.', 'https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/HyundaiHB20.png'),
 (3, 'Renault Kwid', 'Hatch', 159.00, 'JVU5866', 2000, 'Azul', 70, 'Manual', 5, 'Compacto e atraente, o Renault Kwid se destaca por seu design de SUV: altura do solo de 185 mm, revestido com placas de proteção de carroceria e dianteiras. Esse SUV chama atenção com sua nova cor cinza cassiopée, adesivos laterais exclusivos e os detalhes marcantes na cor citron.', 'https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/RenaultKwid%20.png'),
-(4, 'Chevrolet Prisma', 'Sedan', 163.00, 'HPB5591', 2000, 'Preto', 44, 'Automático', 5, 'Ele suporta uma carga útil de 375 kg e tem um tanque de combustível para 54 litros. O sedan Prisma Joy 2019 tem 4.275 mm de comprimento, 1.484 mm de altura, 1.705 mm de largura, vão livre do solo de 120 mm e espaço entre os eixos de 2.528 mm. O peso total é de 1.035 kg.', 'https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/ChevroletPrisma.png'),
+(4, 'Chevrolet Prisma', 'Sedan', 163.00, 'HPB5591', 2014, 'Preto', 45, 'Automático', 5, 'Ele suporta uma carga útil de 375 kg e tem um tanque de combustível para 54 litros. O sedan Prisma Joy 2019 tem 4.275 mm de comprimento, 1.484 mm de altura, 1.705 mm de largura, vão livre do solo de 120 mm e espaço entre os eixos de 2.528 mm. O peso total é de 1.035 kg.', 'https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/ChevroletPrisma.png'),
 (5, 'Civic G10', 'Sedan', 355.00, 'MZN1524', 2000, 'Preto', 56, 'Manual', 5, 'O Civic Geração 10 possui linhas elegantes e fluídas e grades frontais cromadas* que desenham o para- choque e se combinam com as luzes diurnas em LED (DRL). Na traseira, um design marcante e as lanternas em LED em formato “C” conferem ainda mais sofisticação. CONVENIÊNCIA É GARANTIR CONFORTO COM MÁXIMA SOFISTICAÇÃO.', 'https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/CivicG10.png'),
 (6, 'Hyundai Tucson', 'SUV', 320.00, 'JVM8443', 2000, 'Branco', 80, 'Automático', 5, 'O propulsor permanece o 1.6 16v T-GDI a gasolina, que rende 177 cv e 27 kgfm, acoplado à transmissão automatizada de dupla embreagem (Ecoshift) de 7 velocidades. O SUV tem 4475 mm de comprimento, 1850 mm de largura, 1660 mm de altura, 2670 mm de distância entre-eixos e 513 litros de volume no porta-malas.', 'https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/HyundaiTucson.png'),
 (7, 'Renault Fluence', 'Sedan', 240.00, 'JHJ4846', 200, 'Branco', 60, 'Manual', 5, 'O Novo Renault Fluence é um automóvel robusto - sensação reforçada pela elevada linha de cintura e sua musculatura acentuada – e equilibrada – com um porta-malas bem integrado ao design do veículo. Suas dimensões imponentes dão a impressão de se tratar de um veículo de segmento superior.', 'https://file.garden/Zdftnpzmo3pLm05y/trabalho3daw/RenaultFluence.png'),
@@ -202,7 +212,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `aluguel`
 --
 ALTER TABLE `aluguel`
-  MODIFY `id_aluguel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_aluguel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de tabela `carro`

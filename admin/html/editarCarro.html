@@ -181,31 +181,35 @@
 
     function excluirCarro() {
       const params = new URLSearchParams(window.location.search);
-      const id = params.get("id");
+      const id = parseInt(params.get("id"));
 
-      if (!id) {
-        alert("ID do carro não encontrado.");
-        return;
+      if (!id || isNaN(id)) {
+          alert("ID do carro inválido.");
+          return;
       }
 
-      if (!confirm("Tem certeza que deseja excluir este carro?")) {
-        return;
-      }
+      if (!confirm("Tem certeza que deseja excluir este carro?")) return;
 
-      const dados = { id_carro: parseInt(id) };
+      const dados = { id_carro: id };
 
       let xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-          const resposta = JSON.parse(this.responseText);
-
-          if (resposta.sucesso) {
-            alert("Carro excluído com sucesso!");
-            window.location.href = "carros.html";
-          } else {
-            alert("Erro: " + resposta.erro);
+          if (this.readyState === 4) {
+              try {
+                console.log(this.responseText);
+                  const resposta = JSON.parse(this.responseText);
+                
+                  if (resposta.sucesso) {
+                      alert("Carro excluído com sucesso!");
+                      window.location.href = "carros.html";
+                  } else {
+                      alert("Erro: " + (resposta.erro || "Erro desconhecido"));
+                  }
+              } catch(e) {
+                  console.error(e);
+                  alert("Erro ao processar a resposta do servidor.");
+              }
           }
-        }
       };
 
       xmlhttp.open("POST", "../php/excluirCarro.php", true);

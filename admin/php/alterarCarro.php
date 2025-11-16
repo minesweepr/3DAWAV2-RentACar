@@ -37,7 +37,7 @@ $sql = $conn->prepare("
 ");
 
 $sql->bind_param(
-    "ssssissiiisi",
+    "ssssdssiiisi",
     $dados["modelo"],
     $dados["imagem"],
     $dados["tipo"],

@@ -21,21 +21,24 @@ if (!$dados) {
 }
 
 $sql = $conn->prepare("
-    INSERT INTO aluguel
-    (id_usuario, id_carro, data_inicio, data_fim, horario_inicio, horario_fim, lugar, valor_pago)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO carro 
+    (modelo, imagem, tipo, cambio, preco, cor, placa, capacidade, tanque, ano, descricao)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
 
 $sql->bind_param(
-    "iisssssd",
-    $dados["id_usuario"],
-    $dados["id_carro"],
-    $dados["data_inicio"],
-    $dados["data_fim"],
-    $dados["horario_inicio"],
-    $dados["horario_fim"],
-    $dados["lugar"],
-    $dados["valor_pago"]
+    "ssssdssiiis",
+    $dados["modelo"],
+    $dados["imagem"],
+    $dados["tipo"],
+    $dados["cambio"],
+    $dados["preco"],
+    $dados["cor"],
+    $dados["placa"],
+    $dados["capacidade"],
+    $dados["tanque"],
+    $dados["ano"],
+    $dados["descricao"]
 );
 
 if ($sql->execute()) {
